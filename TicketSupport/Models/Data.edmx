@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Tech_Support_TicketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Tech_Support_TicketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -61,6 +61,8 @@
           <Property Name="so_dien_thoai" Type="varchar" MaxLength="15" />
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="trang_thai" Type="bit" />
+          <Property Name="token" Type="varchar" MaxLength="255" />
+          <Property Name="token_expire" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblnguoidung_phongban">
           <Key>
@@ -294,8 +296,7 @@
             <End Role="tblyeucauhotrokythuat" EntitySet="tblyeucauhotrokythuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Tech_Support_TicketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -361,6 +362,8 @@
           <Property Name="trang_thai" Type="Boolean" />
           <NavigationProperty Name="tbllichsuthaydoiyeucaus" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLNGUOI" FromRole="tblnguoidung" ToRole="tbllichsuthaydoiyeucau" />
           <NavigationProperty Name="tblphongbans" Relationship="Self.tblnguoidung_phongban" FromRole="tblnguoidung" ToRole="tblphongban" />
+          <Property Name="token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="token_expire" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblphongban">
           <Key>
@@ -604,6 +607,8 @@
           <EntitySetMapping Name="tblnguoidungs">
             <EntityTypeMapping TypeName="Tech_Support_TicketModel.tblnguoidung">
               <MappingFragment StoreEntitySet="tblnguoidung">
+                <ScalarProperty Name="token_expire" ColumnName="token_expire" />
+                <ScalarProperty Name="token" ColumnName="token" />
                 <ScalarProperty Name="ma_nguoi_dung" ColumnName="ma_nguoi_dung" />
                 <ScalarProperty Name="ho_nguoi_dung" ColumnName="ho_nguoi_dung" />
                 <ScalarProperty Name="ten_nguoi_dung" ColumnName="ten_nguoi_dung" />

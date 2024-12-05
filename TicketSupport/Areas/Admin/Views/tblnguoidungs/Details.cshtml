@@ -1,0 +1,67 @@
+﻿@model TicketSupport.Models.tblnguoidung
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblnguoidung</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ho_nguoi_dung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ho_nguoi_dung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ten_nguoi_dung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ten_nguoi_dung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.so_dien_thoai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.so_dien_thoai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trang_thai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trang_thai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ma_nguoi_dung }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
