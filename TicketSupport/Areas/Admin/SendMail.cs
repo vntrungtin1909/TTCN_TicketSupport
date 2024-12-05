@@ -12,7 +12,9 @@ namespace TicketSupport.Areas.Admin
         public static void SendEmail(string toEmail, string subject, string body)
         {
             // Đọc cấu hình từ Web.config
+
             var fromAddress = new MailAddress("viethoanggaming@gmail.com", "Ticket Support Team");
+
             var toAddress = new MailAddress(toEmail);
             var smtp = new SmtpClient
             {

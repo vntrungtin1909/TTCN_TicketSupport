@@ -34,7 +34,7 @@
                     <a href="#" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a class="nav-link" href="@Url.Action("LogOut", "Login")">Đăng xuất</a>
                 </li>
             </ul>
 
@@ -69,9 +69,21 @@
                         <img src="~/Public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">
-                        @{var username = Session["UserId"] != null ? Session["UserName"].ToString() : "Alexander Pierce";}
-                        @username</a>
+                        @if (Session["UserId"] != null)
+                        {
+                            var username = Session["UserName"].ToString();
+                            <a href="@Url.Action("Edit", "tblnguoidungs", new { area = "Admin", id = Session["UserId"] })" class="d-block">
+
+                                @username
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="d-block">
+                                Alexander Pierce
+                               
+                            </a>
+                        }
                     </div>
                 </div>
 

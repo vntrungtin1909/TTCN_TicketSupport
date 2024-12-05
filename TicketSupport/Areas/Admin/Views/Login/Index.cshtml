@@ -29,15 +29,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <h1 class="w3ls">ĐĂNG NHẬP</h1>
     <div class="content-w3ls">
         <div class="content-agile1">
-            <h2 class="agileits1">Official</h2>
-            <p class="agileits2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <h2 class="agileits1">Success</h2>
+                <p class="agileits2">Bạn đã cập nhật mật khẩu thành công</p>
+            }
+            else if (ViewBag.Message != null)
+            {
+                <h2 class="agileits1">fail</h2>
+                <p class="agileits2">hãy kiểm tra lại tài khoản hoặc mật khẩu</p>
+            }
+            else
+            {
+                <h2 class="agileits1">Official</h2>
+                <p class="agileits2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            }
+
+
         </div>
         <div class="content-agile2">
             @using (Html.BeginForm("Login", "Login", FormMethod.Post))
             {
                 @*<div class="form-control w3layouts">
-                <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
-            </div>*@
+                        <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
+                    </div>*@
 
                 <div class="form-control w3layouts">
                     @*<input type="email" id="email" name="email" placeholder="mail@example.com" title="Please enter a valid email" required="">*@
@@ -52,8 +67,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 @Html.ValidationSummary(false, "", new { @class = "text-danger", style = "color: red; text-align: center" })
 
                 @*<div class="form-control agileinfo">
-                <input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
-            </div>*@
+                        <input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
+                    </div>*@
 
                 <input type="submit" class="register" value="Login">
                 <div style="text-align:center; margin-top:10px;">
