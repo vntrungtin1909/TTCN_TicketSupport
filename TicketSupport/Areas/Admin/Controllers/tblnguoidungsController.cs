@@ -51,6 +51,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 tblnguoidung.trang_thai = true;
+                tblnguoidung.token_expire = null;
+                tblnguoidung.token = null;
                 db.tblnguoidungs.Add(tblnguoidung);
                 db.SaveChanges();
                 return RedirectToAction("Index");

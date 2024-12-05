@@ -66,19 +66,25 @@ namespace TicketSupport.Areas.Admin.Controllers
 
                 if (user == null)
                 {
-                    ViewBag.Message = "Email not found.";
+                    ViewBag.Message = "Email không tồn tại";
                     return View();
                 }
 
-                // Tạo token reset mật khẩu
-                user.ResetToken = Guid.NewGuid().ToString();
-                user.TokenExpiry = DateTime.Now.AddHours(1);
+     
+                user.token = Guid.NewGuid().ToString();
+                user.token_expire = DateTime.Now.AddHours(1);
                 db.SaveChanges();
 
-                // Gửi email (thay bằng phương thức gửi email thật)
-                string resetLink = Url.Action("ResetPassword", "Account", new { token = user.ResetToken }, Request.Url.Scheme);
-                ViewBag.Message = $"Reset link sent: {resetLink}";
-                return View();
+                string resetLink = Url.Action("ResetPassword", "Login", new { token = user.token }, Request.Url.Scheme);
+                string subject = "Yêu cầu đặt lại mật khẩu";
+                string body = $"<p>Chào {user.ho_nguoi_dung} {user.ten_nguoi_dung},</p>" +
+                          $"<p>Bạn đã yêu cầu đặt lại mật khẩu. Nhấn vào liên kết bên dưới để đặt lại mật khẩu:</p>" +
+                          $"<a href='{resetLink}'>Đặt lại mật khẩu</a>" +
+                          $"<p>Liên kết sẽ hết hạn sau 1 giờ.</p>";
+
+            EmailHelper.SendEmail(user.email, subject, body);
+            ViewBag.Message = "Email đặt lại mật khẩu đã được gửi";
+                return View();  
             
         }
         [HttpGet]
@@ -86,36 +92,40 @@ namespace TicketSupport.Areas.Admin.Controllers
         {
             
             
-                var user = db.Users.FirstOrDefault(u => u.ResetToken == token && u.TokenExpiry > DateTime.Now);
+                tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.token == token && u.token_expire > DateTime.Now);
 
                 if (user == null)
                 {
-                    ViewBag.Message = "Invalid or expired token.";
+                    ViewBag.Message = "Token không hợp lệ hoặc hết hạn";
                     return View("Error");
                 }
-
+                ViewBag.Token = token;
                 return View();
             
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(string token, string newPassword)
+        public ActionResult ResetPassword(string token, ChangePassVM p)
         {
 
             
-                var user = db.Users.FirstOrDefault(u => u.ResetToken == token && u.TokenExpiry > DateTime.Now);
+                tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.token == token && u.token_expire > DateTime.Now);
 
                 if (user == null)
                 {
-                    ViewBag.Message = "Invalid or expired token.";
+                    ViewBag.Message = "Token không hợp lệ hoặc hết hạn";
                     return View("Error");
                 }
-
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
-                user.ResetToken = null;
-                user.TokenExpiry = null;
+                if (p.NewPassword != p.ConfirmNewPassword)
+                {
+                ViewBag.Message = "Mật khẩu không khớp";
+                return View();
+                }
+                user.password = p.NewPassword;
+                user.token = null;
+                user.token_expire = null;
                 db.SaveChanges();
-                ViewBag.Message = "Password reset successful!";
+                ViewBag.Message = "Đặt lại mẩu khẩu thành công";
                 return RedirectToAction("Login");
             
         }
