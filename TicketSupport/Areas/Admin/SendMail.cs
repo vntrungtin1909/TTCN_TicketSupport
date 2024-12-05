@@ -12,7 +12,7 @@ namespace TicketSupport.Areas.Admin
         public static void SendEmail(string toEmail, string subject, string body)
         {
             // Đọc cấu hình từ Web.config
-            var fromAddress = new MailAddress("ngotrungtin1992003@gmail.com", "Ticket Support Team");
+            var fromAddress = new MailAddress("nviethoanggaming@gmail.com", "Ticket Support Team");
             var toAddress = new MailAddress(toEmail);
             var smtp = new SmtpClient
             {
@@ -21,7 +21,7 @@ namespace TicketSupport.Areas.Admin
                 EnableSsl = true,       // Kích hoạt SSL
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("ngotrungtin1992003@gmail.com", "0906A-z991A-z635")
+                Credentials = new NetworkCredential("viethoanggaming@gmail.com", "ilhv rohn eieg ssio")
             };
 
             using (var message = new MailMessage(fromAddress, toAddress)

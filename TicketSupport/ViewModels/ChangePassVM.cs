@@ -11,7 +11,7 @@ namespace TicketSupport.ViewModels
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
-        [Compare("ConfirmNewPassword", ErrorMessage = "Password does not match")]
+        [Compare("ConfirmNewPassword", ErrorMessage = "Mật khẩu không khớp")]
         public string NewPassword { get; set; }
         [Required(ErrorMessage = "ConfirmPassword is required")]
         [DataType(DataType.Password)]

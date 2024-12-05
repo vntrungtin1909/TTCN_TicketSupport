@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -73,6 +74,7 @@ namespace TicketSupport.Areas.Admin.Controllers
      
                 user.token = Guid.NewGuid().ToString();
                 user.token_expire = DateTime.Now.AddHours(1);
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
 
                 string resetLink = Url.Action("ResetPassword", "Login", new { token = user.token }, Request.Url.Scheme);
@@ -97,7 +99,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 if (user == null)
                 {
                     ViewBag.Message = "Token không hợp lệ hoặc hết hạn";
-                    return View("Error");
+                    return View();
                 }
                 ViewBag.Token = token;
                 return View();
@@ -105,28 +107,30 @@ namespace TicketSupport.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(string token, ChangePassVM p)
+        public ActionResult ResetPassword(string token, ChangePassVM model)
         {
 
             
-                tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.token == token && u.token_expire > DateTime.Now);
+                tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.token == token);
 
-                if (user == null)
+                if (user == null || user.token_expire <= DateTime.Now)
                 {
                     ViewBag.Message = "Token không hợp lệ hoặc hết hạn";
-                    return View("Error");
+                    return View(model);
                 }
-                if (p.NewPassword != p.ConfirmNewPassword)
+                if (model.NewPassword != model.ConfirmNewPassword)
                 {
                 ViewBag.Message = "Mật khẩu không khớp";
-                return View();
+                return View(model);
                 }
-                user.password = p.NewPassword;
+                user.password = model.NewPassword;
                 user.token = null;
                 user.token_expire = null;
+ //               db.tblnguoidungs.Attach(user);
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.Message = "Đặt lại mẩu khẩu thành công";
-                return RedirectToAction("Login");
+                return RedirectToAction("Index");
             
         }
 
