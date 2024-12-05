@@ -28,6 +28,8 @@ namespace TicketSupport.Models
         public string so_dien_thoai { get; set; }
         public string password { get; set; }
         public Nullable<bool> trang_thai { get; set; }
+        public string token { get; set; }
+        public byte[] token_expire { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbllichsuthaydoiyeucau> tbllichsuthaydoiyeucaus { get; set; }
