@@ -85,7 +85,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                           $"<p>Liên kết sẽ hết hạn sau 1 giờ.</p>";
 
             EmailHelper.SendEmail(user.email, subject, body);
-            ViewBag.Message = "Email đặt lại mật khẩu đã được gửi";
+            ViewBag.Success = "Email";
                 return View();  
             
         }
@@ -115,13 +115,15 @@ namespace TicketSupport.Areas.Admin.Controllers
 
                 if (user == null || user.token_expire <= DateTime.Now)
                 {
-                    ViewBag.Message = "Token không hợp lệ hoặc hết hạn";
+                    ViewBag.Message = "Token";
+                    ViewBag.Token = token;
                     return View(model);
                 }
                 if (model.NewPassword != model.ConfirmNewPassword)
                 {
-                ViewBag.Message = "Mật khẩu không khớp";
-                return View(model);
+                     ViewBag.Message = "Pass";
+                    ViewBag.Token = token;
+                    return View(model);
                 }
                 user.password = model.NewPassword;
                 user.token = null;
@@ -129,11 +131,17 @@ namespace TicketSupport.Areas.Admin.Controllers
  //               db.tblnguoidungs.Attach(user);
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.Message = "Đặt lại mẩu khẩu thành công";
+                TempData["SuccessMessage"] = "Đặt lại mật khẩu thành công";
                 return RedirectToAction("Index");
             
         }
 
+        public ActionResult LogOut()
+        {
+            Session["UserId"] = null;
+            Session["Username"] = null;
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
 
     }
 }

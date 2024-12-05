@@ -9,10 +9,11 @@ using System.Web;
 using System.Web.Mvc;
 using TicketSupport.Library;
 using TicketSupport.Models;
+using TicketSupport.Filters;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
-    
+    [MyAuthenFilter]
     public class tblnguoidungsController : Controller
     {
         private Tech_Support_TicketEntities db = new Tech_Support_TicketEntities();
