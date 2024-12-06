@@ -11,6 +11,7 @@ using CaptchaMvc.HtmlHelpers;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.IO;
+using BCrypt.Net;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
@@ -45,7 +46,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 ViewBag.User = "Tài khoản không hợp lệ";
                 return View("Index");
             }
-            if (user.mat_khau != mat_khau)
+            if (!BCrypt.Net.BCrypt.Verify(mat_khau, user.mat_khau))
             {
                 ViewBag.Pass = "Tài khoản và mật khẩu không khớp";
                 return View("Index");
@@ -132,7 +133,6 @@ namespace TicketSupport.Areas.Admin.Controllers
 
             
                 tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.token == token);
-                if (user == null) { }
 
                 if (user == null || user.token_expire <= DateTime.Now)
                 {
@@ -146,7 +146,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                     ViewBag.Token = token;
                     return View(model);
                 }
-                user.mat_khau = model.NewPassword;
+                user.mat_khau = MaHoa.HashPassword(model.NewPassword);
                 user.token = null;
                 user.token_expire = null;
                 user.cap_nhat = DateTime.Now;
