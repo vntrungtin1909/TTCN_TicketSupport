@@ -24,6 +24,38 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="~/Public/web/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Public/web/css/style.css" rel='stylesheet' type='text/css' media="all" />
     <!-- /css -->
+    <style>
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        #captchaImage {
+            display: block;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .captcha-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .captcha-reload-button {
+            display: block;
+            margin: 10px auto;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .captcha-reload-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
 </head>
 <body>
     <h1 class="w3ls">ĐĂNG NHẬP</h1>
@@ -48,15 +80,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         </div>
         <div class="content-agile2">
-            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "fromCaptcha" }))
             {
                 @*<div class="form-control w3layouts">
-                        <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
-                    </div>*@
+                <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
+            </div>*@
 
                 <div class="form-control w3layouts">
                     @*<input type="email" id="email" name="email" placeholder="mail@example.com" title="Please enter a valid email" required="">*@
-                    @Html.TextBoxFor(model => model.email, new { @class = "form-control", @autofocus = "autofocus", @type = "email", @id = "email", @name = "email", @placeholder = "mail@example.com", @title = "Please enter a valid email", @required = "required" })
+                    @Html.TextBoxFor(model => model.email, new { @class = "form-control", @autofocus = "autofocus", @type = "text", @id = "email", @name = "email", @placeholder = "mail@example.com", @title = "Please enter a valid email", @required = "required" })
                 </div>
 
                 <div class="form-control w3layouts">
@@ -64,11 +96,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     @Html.PasswordFor(model => model.password, new { @class = "form-control lock", @placeholder = "Password", @id = "password1", @required = "required" })
 
                 </div>
+                @*<div class="form-control w3layouts">
+                @Html.Captcha("Thử lại", "Nhập những gì bạn thấy", 5, "Bắt buộc", true)
+
+                <p class="wthree w3l text-danger">@ViewBag.Error</p>
+                </div>*@
+                <!-- CAPTCHA section -->
+                <div class="form-control w3layouts captcha-container">
+                    <label for="captcha" style="color: white;">Nhập mã CAPTCHA:</label>
+                    <input type="text" id="captcha" name="captcha" placeholder="Nhập mã CAPTCHA" required class="form-control" />
+                    <br />
+                    <img src="@Url.Action("GenerateCaptcha", "Login")" alt="CAPTCHA" id="captchaImage" />
+                    <button type="button" class="captcha-reload-button" onclick="document.getElementById('captchaImage').src = '@Url.Action("GenerateCaptcha", "Login")?' + new Date().getTime();">Tải lại</button>
+                </div>
+
                 @Html.ValidationSummary(false, "", new { @class = "text-danger", style = "color: red; text-align: center" })
 
                 @*<div class="form-control agileinfo">
-                        <input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
-                    </div>*@
+                <input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
+            </div>*@
 
                 <input type="submit" class="register" value="Login">
                 <div style="text-align:center; margin-top:10px;">

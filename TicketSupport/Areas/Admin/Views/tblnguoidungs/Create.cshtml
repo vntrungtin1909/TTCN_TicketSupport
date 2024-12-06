@@ -24,7 +24,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <strong class="text-danger">TẠO MỚI USER</strong>
+                                <strong class="text-danger">TẠO MỚI NGƯỜI SỬ DỤNG</strong>
                             </div>
                             <div class="col-md-6 text-right">
                                 <a href="@Url.Action("Index","tblnguoidungs")" class="btn-sm btn-info"><i class="fa fa-long-arrow-alt-left"> Quay lại</i></a>
@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <div class="row">
                             @*Phần nhập dữ liệu bằng tay*@
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ma_nguoi_dung, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,19 +45,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ho_nguoi_dung, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.ho_ten_nguoi_dung, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ho_nguoi_dung, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ho_nguoi_dung, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.ho_ten_nguoi_dung, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ho_ten_nguoi_dung, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ten_nguoi_dung, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.ten_dang_nhap, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ten_nguoi_dung, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ten_nguoi_dung, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.ten_dang_nhap, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ten_dang_nhap, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
@@ -79,9 +81,10 @@
                                         @Html.ValidationMessageFor(model => model.so_dien_thoai, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                                </div>
 
 
-                            </div>
+                            
                            
                         </div>
 

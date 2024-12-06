@@ -54,8 +54,19 @@ namespace TicketSupport.Areas.Admin.Controllers
                 tblnguoidung.trang_thai = true;
                 tblnguoidung.token_expire = null;
                 tblnguoidung.token = null;
+                tblnguoidung.ngay_tao = DateTime.Now;
+                tblnguoidung.cap_nhat = null;
                 db.tblnguoidungs.Add(tblnguoidung);
                 db.SaveChanges();
+
+                string subject = "Thông báo tạo tài khoản thành công";
+                string body = $"<p>Chào {tblnguoidung.ho_ten_nguoi_dung}</p>" +                        
+                          $"<p>Email đăng nhập: <b>{tblnguoidung.email}</b></p>" +
+                          $"<p>Tài khoản đăng nhập: <b>{tblnguoidung.ten_dang_nhap}</b></p>" +
+                          $"<p>Mật khẩu đăng nhập: <b>{tblnguoidung.password}</b></p>" +
+                          $"<p>Xin cảm ơn</p>";
+
+            EmailHelper.SendEmail(tblnguoidung.email, subject, body);
                 return RedirectToAction("Index");
             }
 
@@ -87,6 +98,7 @@ namespace TicketSupport.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                tblnguoidung.cap_nhat = DateTime.Now;
                 db.Entry(tblnguoidung).State = EntityState.Modified;
                 db.SaveChanges();
                 //thogn bao thanh cong
@@ -154,6 +166,7 @@ namespace TicketSupport.Areas.Admin.Controllers
             {
                 user.trang_thai = true;
             }
+            user.cap_nhat = DateTime.Now;
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
 

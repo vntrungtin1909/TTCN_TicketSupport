@@ -22,14 +22,16 @@ namespace TicketSupport.Models
         }
     
         public string ma_nguoi_dung { get; set; }
-        public string ho_nguoi_dung { get; set; }
-        public string ten_nguoi_dung { get; set; }
+        public string ho_ten_nguoi_dung { get; set; }
+        public string ten_dang_nhap { get; set; }
         public string email { get; set; }
         public string so_dien_thoai { get; set; }
         public string password { get; set; }
         public Nullable<bool> trang_thai { get; set; }
         public string token { get; set; }
         public Nullable<System.DateTime> token_expire { get; set; }
+        public Nullable<System.DateTime> ngay_tao { get; set; }
+        public Nullable<System.DateTime> cap_nhat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbllichsuthaydoiyeucau> tbllichsuthaydoiyeucaus { get; set; }
