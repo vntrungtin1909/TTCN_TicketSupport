@@ -66,10 +66,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <h2 class="agileits1">Success</h2>
                 <p class="agileits2">Bạn đã cập nhật mật khẩu thành công</p>
             }
-            else if (ViewBag.Message != null)
+            else if (ViewBag.Captcha != null)
             {
                 <h2 class="agileits1">fail</h2>
-                <p class="agileits2">hãy kiểm tra lại tài khoản hoặc mật khẩu</p>
+                <p class="agileits2">Captcha không đúng</p>
+            }
+            else if (ViewBag.User != null)
+            {
+                <h2 class="agileits1">fail</h2>
+                <p class="agileits2">Tài khoản không hợp lệ</p>
+            }
+            else if (ViewBag.Pass != null)
+            {
+                <h2 class="agileits1">fail</h2>
+                <p class="agileits2">Mật khẩu không khớp</p>
             }
             else
             {

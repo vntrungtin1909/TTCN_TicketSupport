@@ -30,24 +30,24 @@ namespace TicketSupport.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string email, string password, string captcha)
+        public ActionResult Login(string email, string mat_khau, string captcha)
         {
 
             if (Session["Captcha"] == null || Session["Captcha"].ToString() != captcha)
             {
-                ViewBag.Message = "CAPTCHA không hợp lệ. Vui lòng thử lại.";
+                ViewBag.Captcha = "CAPTCHA không hợp lệ. Vui lòng thử lại.";
                 return View("Index");
             }
             tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.email == email || u.ten_dang_nhap == email);
 
             if (user == null )
             {
-                ViewBag.Message = "Tài khoản không hợp lệ";
+                ViewBag.User = "Tài khoản không hợp lệ";
                 return View("Index");
             }
-            if (user.mat_khau != password)
+            if (user.mat_khau != mat_khau)
             {
-                ViewBag.Message = "Tài khoản và mật khẩu không khớp";
+                ViewBag.Pass = "Tài khoản và mật khẩu không khớp";
                 return View("Index");
             }
             if (user.cap_nhat == null)
