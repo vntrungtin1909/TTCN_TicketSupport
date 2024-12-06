@@ -20,6 +20,8 @@ namespace TicketSupport.Models
         public string trang_thai_xu_ly { get; set; }
         public string noi_dung { get; set; }
         public string loai_thay_doi { get; set; }
+        public Nullable<System.DateTime> ngay_tao { get; set; }
+        public Nullable<System.DateTime> ngay_cap_nhat { get; set; }
     
         public virtual tblnguoidung tblnguoidung { get; set; }
         public virtual tblyeucauhotrokythuat tblyeucauhotrokythuat { get; set; }

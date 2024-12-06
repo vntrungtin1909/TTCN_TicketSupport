@@ -25,6 +25,8 @@ namespace TicketSupport.Models
         public string ma_phong_ban { get; set; }
         public string ten_phong_ban { get; set; }
         public Nullable<bool> trang_thai { get; set; }
+        public Nullable<System.DateTime> ngay_tao { get; set; }
+        public Nullable<System.DateTime> ngay_cap_nhat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblyeucauhotrokythuat> tblyeucauhotrokythuats { get; set; }

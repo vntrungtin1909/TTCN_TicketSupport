@@ -26,7 +26,7 @@ namespace TicketSupport.Models
         public string ten_dang_nhap { get; set; }
         public string email { get; set; }
         public string so_dien_thoai { get; set; }
-        public string password { get; set; }
+        public string mat_khau { get; set; }
         public Nullable<bool> trang_thai { get; set; }
         public string token { get; set; }
         public Nullable<System.DateTime> token_expire { get; set; }

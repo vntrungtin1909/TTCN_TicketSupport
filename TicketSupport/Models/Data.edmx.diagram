@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6b09434ddcd14c139b0192ac74fcb428" Name="Diagram1">
+      <Diagram DiagramId="25fb745338c247a281be853af30b3b12" Name="Diagram1">
         <EntityTypeShape EntityType="Tech_Support_TicketModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblchucnang" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblkhachhang" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tbllichsuthaydoiyeucau" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblnguoidung" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblphongban" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblquyen" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblyeucauhotrokythuat" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblchucnang" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblkhachhang" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tbllichsuthaydoiyeucau" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblnguoidung" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblphongban" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblquyen" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblyeucauhotrokythuat" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
         <AssociationConnector Association="Tech_Support_TicketModel.FK_TBLQUYEN_REFERENCE_TBLCHUCN" ManuallyRouted="false" />
         <AssociationConnector Association="Tech_Support_TicketModel.FK_TBLYEUCA_REFERENCE_TBLKHACH" ManuallyRouted="false" />
         <AssociationConnector Association="Tech_Support_TicketModel.FK_TBLLICHS_REFERENCE_TBLNGUOI" ManuallyRouted="false" />

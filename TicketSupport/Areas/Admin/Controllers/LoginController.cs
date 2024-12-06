@@ -45,7 +45,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 ViewBag.Message = "Tài khoản không hợp lệ";
                 return View("Index");
             }
-            if (user.password != password)
+            if (user.mat_khau != password)
             {
                 ViewBag.Message = "Tài khoản và mật khẩu không khớp";
                 return View("Index");
@@ -146,7 +146,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                     ViewBag.Token = token;
                     return View(model);
                 }
-                user.password = model.NewPassword;
+                user.mat_khau = model.NewPassword;
                 user.token = null;
                 user.token_expire = null;
                 user.cap_nhat = DateTime.Now;

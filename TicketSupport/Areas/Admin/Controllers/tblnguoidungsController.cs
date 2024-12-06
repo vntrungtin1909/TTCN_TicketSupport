@@ -63,7 +63,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 string body = $"<p>Chào {tblnguoidung.ho_ten_nguoi_dung}</p>" +                        
                           $"<p>Email đăng nhập: <b>{tblnguoidung.email}</b></p>" +
                           $"<p>Tài khoản đăng nhập: <b>{tblnguoidung.ten_dang_nhap}</b></p>" +
-                          $"<p>Mật khẩu đăng nhập: <b>{tblnguoidung.password}</b></p>" +
+                          $"<p>Mật khẩu đăng nhập: <b>{tblnguoidung.mat_khau}</b></p>" +
                           $"<p>Xin cảm ơn</p>";
 
             EmailHelper.SendEmail(tblnguoidung.email, subject, body);

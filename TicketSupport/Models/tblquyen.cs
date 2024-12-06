@@ -23,6 +23,8 @@ namespace TicketSupport.Models
         public string ma_quyen { get; set; }
         public string ma_chuc_nang { get; set; }
         public string ten_quyen { get; set; }
+        public Nullable<System.DateTime> ngay_tao { get; set; }
+        public Nullable<System.DateTime> cap_nhat { get; set; }
     
         public virtual tblchucnang tblchucnang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

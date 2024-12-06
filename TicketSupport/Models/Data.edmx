@@ -20,24 +20,26 @@
             <PropertyRef Name="ma_chuc_nang" />
           </Key>
           <Property Name="ma_chuc_nang" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ten_chuc_nang" Type="nvarchar" MaxLength="100" />
+          <Property Name="ten_chuc_nang" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ngay_tao" Type="datetime" />
+          <Property Name="ngay_cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblkhachhang">
           <Key>
             <PropertyRef Name="ma_khach_hang" />
           </Key>
           <Property Name="ma_khach_hang" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ho_khach_hang" Type="nvarchar" MaxLength="50" />
-          <Property Name="ten_khach_hang" Type="nvarchar" MaxLength="10" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="so_dien_thoai" Type="varchar" MaxLength="15" />
-          <Property Name="ten_cong_ty" Type="nvarchar" MaxLength="100" />
-          <Property Name="ma_so_thue" Type="varchar" MaxLength="15" />
+          <Property Name="ho_ten_khach_hang" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="so_dien_thoai" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ten_cong_ty" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ma_so_thue" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="phan_mem" Type="nvarchar" MaxLength="100" />
           <Property Name="website" Type="varchar" MaxLength="100" />
-          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="mat_khau" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="ngay_kich_hoat" Type="datetime" />
           <Property Name="trang_thai" Type="bit" />
+          <Property Name="cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tbllichsuthaydoiyeucau">
           <Key>
@@ -47,19 +49,21 @@
           <Property Name="ma_nhan_vien" Type="varchar" MaxLength="10" />
           <Property Name="ma_yeu_cau" Type="varchar" MaxLength="10" />
           <Property Name="trang_thai_xu_ly" Type="varchar" MaxLength="30" />
-          <Property Name="noi_dung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="noi_dung" Type="varchar(max)" Nullable="false" />
           <Property Name="loai_thay_doi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ngay_tao" Type="datetime" />
+          <Property Name="ngay_cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblnguoidung">
           <Key>
             <PropertyRef Name="ma_nguoi_dung" />
           </Key>
           <Property Name="ma_nguoi_dung" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ho_ten_nguoi_dung" Type="nvarchar" MaxLength="50" />
-          <Property Name="ten_dang_nhap" Type="nvarchar" MaxLength="10" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="so_dien_thoai" Type="varchar" MaxLength="15" />
-          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="ho_ten_nguoi_dung" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ten_dang_nhap" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="so_dien_thoai" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="mat_khau" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="trang_thai" Type="bit" />
           <Property Name="token" Type="varchar" MaxLength="255" />
           <Property Name="token_expire" Type="datetime" />
@@ -81,14 +85,18 @@
           <Property Name="ma_phong_ban" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ten_phong_ban" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="trang_thai" Type="bit" />
+          <Property Name="ngay_tao" Type="datetime" />
+          <Property Name="ngay_cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblquyen">
           <Key>
             <PropertyRef Name="ma_quyen" />
           </Key>
           <Property Name="ma_quyen" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ma_chuc_nang" Type="varchar" MaxLength="10" />
-          <Property Name="ten_quyen" Type="nvarchar" MaxLength="50" />
+          <Property Name="ma_chuc_nang" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ten_quyen" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ngay_tao" Type="datetime" />
+          <Property Name="cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblquyen_phongban">
           <Key>
@@ -103,8 +111,8 @@
             <PropertyRef Name="ma_yeu_cau" />
           </Key>
           <Property Name="ma_yeu_cau" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ten_yeu_cau" Type="nvarchar" MaxLength="100" />
-          <Property Name="noi_dung_yeu_cau" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ten_yeu_cau" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="noi_dung_yeu_cau" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ngay_tiep_nhan" Type="datetime" />
           <Property Name="ngay_xu_ly" Type="datetime" />
           <Property Name="trang_thai_xu_ly" Type="nvarchar" MaxLength="30" />
@@ -160,7 +168,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TBLQUYEN_REFERENCE_TBLCHUCN">
-          <End Role="tblchucnang" Type="Self.tblchucnang" Multiplicity="0..1" />
+          <End Role="tblchucnang" Type="Self.tblchucnang" Multiplicity="1" />
           <End Role="tblquyen" Type="Self.tblquyen" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblchucnang">
@@ -318,7 +326,9 @@
             <PropertyRef Name="ma_chuc_nang" />
           </Key>
           <Property Name="ma_chuc_nang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ten_chuc_nang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ten_chuc_nang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
+          <Property Name="ngay_cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblquyens" Relationship="Self.FK_TBLQUYEN_REFERENCE_TBLCHUCN" FromRole="tblchucnang" ToRole="tblquyen" />
         </EntityType>
         <EntityType Name="tblkhachhang">
@@ -326,17 +336,17 @@
             <PropertyRef Name="ma_khach_hang" />
           </Key>
           <Property Name="ma_khach_hang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ho_khach_hang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ten_khach_hang" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="so_dien_thoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="ten_cong_ty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ma_so_thue" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ho_ten_khach_hang" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="so_dien_thoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ten_cong_ty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ma_so_thue" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="phan_mem" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="website" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mat_khau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ngay_kich_hoat" Type="DateTime" Precision="3" />
           <Property Name="trang_thai" Type="Boolean" />
+          <Property Name="cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblyeucauhotrokythuats" Relationship="Self.FK_TBLYEUCA_REFERENCE_TBLKHACH" FromRole="tblkhachhang" ToRole="tblyeucauhotrokythuat" />
         </EntityType>
         <EntityType Name="tbllichsuthaydoiyeucau">
@@ -347,8 +357,10 @@
           <Property Name="ma_nhan_vien" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="ma_yeu_cau" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="trang_thai_xu_ly" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="noi_dung" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="noi_dung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="loai_thay_doi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
+          <Property Name="ngay_cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblnguoidung" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLNGUOI" FromRole="tbllichsuthaydoiyeucau" ToRole="tblnguoidung" />
           <NavigationProperty Name="tblyeucauhotrokythuat" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLYEUCA" FromRole="tbllichsuthaydoiyeucau" ToRole="tblyeucauhotrokythuat" />
         </EntityType>
@@ -357,11 +369,11 @@
             <PropertyRef Name="ma_nguoi_dung" />
           </Key>
           <Property Name="ma_nguoi_dung" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ho_ten_nguoi_dung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ten_dang_nhap" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="so_dien_thoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ho_ten_nguoi_dung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ten_dang_nhap" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="so_dien_thoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mat_khau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="trang_thai" Type="Boolean" />
           <Property Name="token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="token_expire" Type="DateTime" Precision="3" />
@@ -377,6 +389,8 @@
           <Property Name="ma_phong_ban" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ten_phong_ban" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="trang_thai" Type="Boolean" />
+          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
+          <Property Name="ngay_cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblyeucauhotrokythuats" Relationship="Self.FK_TBLYEUCA_REFERENCE_TBLPHONG" FromRole="tblphongban" ToRole="tblyeucauhotrokythuat" />
           <NavigationProperty Name="tblnguoidungs" Relationship="Self.tblnguoidung_phongban" FromRole="tblphongban" ToRole="tblnguoidung" />
           <NavigationProperty Name="tblquyens" Relationship="Self.tblquyen_phongban" FromRole="tblphongban" ToRole="tblquyen" />
@@ -386,8 +400,10 @@
             <PropertyRef Name="ma_quyen" />
           </Key>
           <Property Name="ma_quyen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ma_chuc_nang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ten_quyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ma_chuc_nang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ten_quyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
+          <Property Name="cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblchucnang" Relationship="Self.FK_TBLQUYEN_REFERENCE_TBLCHUCN" FromRole="tblquyen" ToRole="tblchucnang" />
           <NavigationProperty Name="tblphongbans" Relationship="Self.tblquyen_phongban" FromRole="tblquyen" ToRole="tblphongban" />
         </EntityType>
@@ -396,8 +412,8 @@
             <PropertyRef Name="ma_yeu_cau" />
           </Key>
           <Property Name="ma_yeu_cau" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ten_yeu_cau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="noi_dung_yeu_cau" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ten_yeu_cau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="noi_dung_yeu_cau" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ngay_tiep_nhan" Type="DateTime" Precision="3" />
           <Property Name="ngay_xu_ly" Type="DateTime" Precision="3" />
           <Property Name="trang_thai_xu_ly" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -408,7 +424,7 @@
           <NavigationProperty Name="tblphongban" Relationship="Self.FK_TBLYEUCA_REFERENCE_TBLPHONG" FromRole="tblyeucauhotrokythuat" ToRole="tblphongban" />
         </EntityType>
         <Association Name="FK_TBLQUYEN_REFERENCE_TBLCHUCN">
-          <End Role="tblchucnang" Type="Self.tblchucnang" Multiplicity="0..1" />
+          <End Role="tblchucnang" Type="Self.tblchucnang" Multiplicity="1" />
           <End Role="tblquyen" Type="Self.tblquyen" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblchucnang">
@@ -576,6 +592,8 @@
               <MappingFragment StoreEntitySet="tblchucnang">
                 <ScalarProperty Name="ma_chuc_nang" ColumnName="ma_chuc_nang" />
                 <ScalarProperty Name="ten_chuc_nang" ColumnName="ten_chuc_nang" />
+                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
+                <ScalarProperty Name="ngay_cap_nhat" ColumnName="ngay_cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -583,17 +601,17 @@
             <EntityTypeMapping TypeName="Tech_Support_TicketModel.tblkhachhang">
               <MappingFragment StoreEntitySet="tblkhachhang">
                 <ScalarProperty Name="ma_khach_hang" ColumnName="ma_khach_hang" />
-                <ScalarProperty Name="ho_khach_hang" ColumnName="ho_khach_hang" />
-                <ScalarProperty Name="ten_khach_hang" ColumnName="ten_khach_hang" />
+                <ScalarProperty Name="ho_ten_khach_hang" ColumnName="ho_ten_khach_hang" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="so_dien_thoai" ColumnName="so_dien_thoai" />
                 <ScalarProperty Name="ten_cong_ty" ColumnName="ten_cong_ty" />
                 <ScalarProperty Name="ma_so_thue" ColumnName="ma_so_thue" />
                 <ScalarProperty Name="phan_mem" ColumnName="phan_mem" />
                 <ScalarProperty Name="website" ColumnName="website" />
-                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mat_khau" ColumnName="mat_khau" />
                 <ScalarProperty Name="ngay_kich_hoat" ColumnName="ngay_kich_hoat" />
                 <ScalarProperty Name="trang_thai" ColumnName="trang_thai" />
+                <ScalarProperty Name="cap_nhat" ColumnName="cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -606,6 +624,8 @@
                 <ScalarProperty Name="trang_thai_xu_ly" ColumnName="trang_thai_xu_ly" />
                 <ScalarProperty Name="noi_dung" ColumnName="noi_dung" />
                 <ScalarProperty Name="loai_thay_doi" ColumnName="loai_thay_doi" />
+                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
+                <ScalarProperty Name="ngay_cap_nhat" ColumnName="ngay_cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -617,7 +637,7 @@
                 <ScalarProperty Name="ten_dang_nhap" ColumnName="ten_dang_nhap" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="so_dien_thoai" ColumnName="so_dien_thoai" />
-                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mat_khau" ColumnName="mat_khau" />
                 <ScalarProperty Name="trang_thai" ColumnName="trang_thai" />
                 <ScalarProperty Name="token" ColumnName="token" />
                 <ScalarProperty Name="token_expire" ColumnName="token_expire" />
@@ -632,6 +652,8 @@
                 <ScalarProperty Name="ma_phong_ban" ColumnName="ma_phong_ban" />
                 <ScalarProperty Name="ten_phong_ban" ColumnName="ten_phong_ban" />
                 <ScalarProperty Name="trang_thai" ColumnName="trang_thai" />
+                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
+                <ScalarProperty Name="ngay_cap_nhat" ColumnName="ngay_cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -641,6 +663,8 @@
                 <ScalarProperty Name="ma_quyen" ColumnName="ma_quyen" />
                 <ScalarProperty Name="ma_chuc_nang" ColumnName="ma_chuc_nang" />
                 <ScalarProperty Name="ten_quyen" ColumnName="ten_quyen" />
+                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
+                <ScalarProperty Name="cap_nhat" ColumnName="cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
