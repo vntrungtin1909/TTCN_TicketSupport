@@ -39,7 +39,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 ViewBag.Captcha = "CAPTCHA không hợp lệ. Vui lòng thử lại.";
                 return View("Index");
             }
-            tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.email == email || u.ten_dang_nhap == email);
+            tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.email == email || u.ten_dang_nhap == email || u.mat_khau == mat_khau);
 
             if (user == null )
             {
