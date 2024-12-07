@@ -24,7 +24,20 @@ namespace TicketSupport.Models
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+			{
+				base.OnModelCreating(modelBuilder);
+
+				modelBuilder.Entity<tblphongban>()
+					.HasMany(p => p.tblquyens)
+					.WithMany(q => q.tblphongbans)
+					.Map(m =>
+					{
+						m.ToTable("tblquyen_phongban"); // Tên bảng trung gian trong cơ sở dữ liệu
+						m.MapLeftKey("ma_phong_ban");  // Khóa chính của tblphongban
+						m.MapRightKey("ma_quyen");     // Khóa chính của tblquyen
+					});
+			}
+			throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

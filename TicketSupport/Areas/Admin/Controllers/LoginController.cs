@@ -29,8 +29,19 @@ namespace TicketSupport.Areas.Admin.Controllers
         {
             return View();
         }
+		public List<string> GetUserRoles(string userId)
+		{
+			var roles = db.tblnguoidungs
+				.Where(nd => nd.ma_nguoi_dung == userId)
+				.SelectMany(nd => nd.tblphongbans)
+				.SelectMany(pb => pb.tblquyens)
+				.Select(q => q.ma_quyen)
+				.Distinct()
+				.ToList();
 
-        [HttpPost]
+			return roles;
+		}
+		[HttpPost]
         public ActionResult Login(string email, string mat_khau, string captcha)
         {
 
@@ -51,6 +62,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 ViewBag.Pass = "Tài khoản và mật khẩu không khớp";
                 return View("Index");
             }
+
             if (user.cap_nhat == null)
             {
                 user.token = Guid.NewGuid().ToString();
@@ -61,13 +73,14 @@ namespace TicketSupport.Areas.Admin.Controllers
                 string resetLink = Url.Action("ResetPassword", "Login", new { token = user.token }, Request.Url.Scheme);
                 return Redirect(resetLink);
             }
+			var userRoles = GetUserRoles(user.ma_nguoi_dung);
 
-   
 
-            Session["UserId"] = user.ma_nguoi_dung;
+			Session["UserId"] = user.ma_nguoi_dung;
             Session["Username"] = user.ho_ten_nguoi_dung;
+            Session["UserRoles"] = userRoles; // Lưu danh sách quyền vào Session
             //return RedirectToAction("Index", "Home");
-            return RedirectToAction("Index", "tblnguoidungs");
+			return RedirectToAction("Index", "Dashboard");
 
 
         }

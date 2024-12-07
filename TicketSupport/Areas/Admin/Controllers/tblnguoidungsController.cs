@@ -10,10 +10,12 @@ using System.Web.Mvc;
 using TicketSupport.Library;
 using TicketSupport.Models;
 using TicketSupport.Filters;
+using TicketSupport.Areas.Admin.Authorization;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
-    [MyAuthenFilter]
+	[AuthorizeRoles("ADMIN", "NS")]
+	[MyAuthenFilter]
     public class tblnguoidungsController : Controller
     {
         private Tech_Support_TicketEntities db = new Tech_Support_TicketEntities();
