@@ -51,6 +51,8 @@ namespace TicketSupport.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string plainPass = tblnguoidung.mat_khau;
+                tblnguoidung.mat_khau = MaHoa.HashPassword(plainPass);
                 tblnguoidung.trang_thai = true;
                 tblnguoidung.token_expire = null;
                 tblnguoidung.token = null;
@@ -63,7 +65,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 string body = $"<p>Chào {tblnguoidung.ho_ten_nguoi_dung}</p>" +                        
                           $"<p>Email đăng nhập: <b>{tblnguoidung.email}</b></p>" +
                           $"<p>Tài khoản đăng nhập: <b>{tblnguoidung.ten_dang_nhap}</b></p>" +
-                          $"<p>Mật khẩu đăng nhập: <b>{tblnguoidung.mat_khau}</b></p>" +
+                          $"<p>Mật khẩu đăng nhập: <b>{plainPass}</b></p>" +
                           $"<p>Xin cảm ơn</p>";
 
             EmailHelper.SendEmail(tblnguoidung.email, subject, body);
@@ -98,6 +100,21 @@ namespace TicketSupport.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                tblnguoidung user = db.tblnguoidungs.AsNoTracking().FirstOrDefault(u => u.ma_nguoi_dung == tblnguoidung.ma_nguoi_dung);
+
+                if (user == null)
+                {
+                    TempData["message"] = new XMessage("danger", "Người dùng không tồn tại");
+                    return RedirectToAction("Index");
+                }
+                if (user.mat_khau != tblnguoidung.mat_khau)
+                {
+                    tblnguoidung.mat_khau = MaHoa.HashPassword(tblnguoidung.mat_khau);
+                }
+                else
+                {
+                    tblnguoidung.mat_khau = user.mat_khau;
+                }
                 tblnguoidung.cap_nhat = DateTime.Now;
                 db.Entry(tblnguoidung).State = EntityState.Modified;
                 db.SaveChanges();
