@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Tech_Support_TicketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Tech_Support_TicketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -32,14 +32,17 @@
           <Property Name="ho_ten_khach_hang" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="so_dien_thoai" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="ten_cong_ty" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ma_so_thue" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ten_cong_ty" Type="nvarchar" MaxLength="100" />
+          <Property Name="ma_so_thue" Type="varchar" MaxLength="15" />
           <Property Name="phan_mem" Type="nvarchar" MaxLength="100" />
           <Property Name="website" Type="varchar" MaxLength="100" />
           <Property Name="mat_khau" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="ngay_kich_hoat" Type="datetime" />
           <Property Name="trang_thai" Type="bit" />
           <Property Name="cap_nhat" Type="datetime" />
+          <Property Name="ngay_tao" Type="datetime" />
+          <Property Name="token" Type="varchar" MaxLength="200" />
+          <Property Name="token_expire" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tbllichsuthaydoiyeucau">
           <Key>
@@ -69,6 +72,7 @@
           <Property Name="token_expire" Type="datetime" />
           <Property Name="ngay_tao" Type="datetime" />
           <Property Name="cap_nhat" Type="datetime" />
+          <Property Name="ngay_kich_hoat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblnguoidung_phongban">
           <Key>
@@ -306,8 +310,7 @@
             <End Role="tblyeucauhotrokythuat" EntitySet="tblyeucauhotrokythuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Tech_Support_TicketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -339,14 +342,17 @@
           <Property Name="ho_ten_khach_hang" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="so_dien_thoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ten_cong_ty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ma_so_thue" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ten_cong_ty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ma_so_thue" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="phan_mem" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="website" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="mat_khau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ngay_kich_hoat" Type="DateTime" Precision="3" />
           <Property Name="trang_thai" Type="Boolean" />
           <Property Name="cap_nhat" Type="DateTime" Precision="3" />
+          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
+          <Property Name="token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="token_expire" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblyeucauhotrokythuats" Relationship="Self.FK_TBLYEUCA_REFERENCE_TBLKHACH" FromRole="tblkhachhang" ToRole="tblyeucauhotrokythuat" />
         </EntityType>
         <EntityType Name="tbllichsuthaydoiyeucau">
@@ -381,6 +387,7 @@
           <Property Name="cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tbllichsuthaydoiyeucaus" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLNGUOI" FromRole="tblnguoidung" ToRole="tbllichsuthaydoiyeucau" />
           <NavigationProperty Name="tblphongbans" Relationship="Self.tblnguoidung_phongban" FromRole="tblnguoidung" ToRole="tblphongban" />
+          <Property Name="ngay_kich_hoat" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblphongban">
           <Key>
@@ -612,6 +619,9 @@
                 <ScalarProperty Name="ngay_kich_hoat" ColumnName="ngay_kich_hoat" />
                 <ScalarProperty Name="trang_thai" ColumnName="trang_thai" />
                 <ScalarProperty Name="cap_nhat" ColumnName="cap_nhat" />
+                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="token_expire" ColumnName="token_expire" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -632,6 +642,7 @@
           <EntitySetMapping Name="tblnguoidungs">
             <EntityTypeMapping TypeName="Tech_Support_TicketModel.tblnguoidung">
               <MappingFragment StoreEntitySet="tblnguoidung">
+                <ScalarProperty Name="ngay_kich_hoat" ColumnName="ngay_kich_hoat" />
                 <ScalarProperty Name="ma_nguoi_dung" ColumnName="ma_nguoi_dung" />
                 <ScalarProperty Name="ho_ten_nguoi_dung" ColumnName="ho_ten_nguoi_dung" />
                 <ScalarProperty Name="ten_dang_nhap" ColumnName="ten_dang_nhap" />

@@ -32,6 +32,7 @@ namespace TicketSupport.Models
         public Nullable<System.DateTime> token_expire { get; set; }
         public Nullable<System.DateTime> ngay_tao { get; set; }
         public Nullable<System.DateTime> cap_nhat { get; set; }
+        public Nullable<System.DateTime> ngay_kich_hoat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbllichsuthaydoiyeucau> tbllichsuthaydoiyeucaus { get; set; }

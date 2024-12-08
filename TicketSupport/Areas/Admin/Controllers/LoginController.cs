@@ -64,7 +64,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 return View("Index");
             }
 
-            if (user.cap_nhat == null)
+            if (user.ngay_kich_hoat == null)
             {
                 user.token = Guid.NewGuid().ToString();
                 user.token_expire = DateTime.Now.AddHours(1);
@@ -163,6 +163,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 user.mat_khau = MaHoa.HashPassword(model.NewPassword);
                 user.token = null;
                 user.token_expire = null;
+                user.ngay_kich_hoat = DateTime.Now;
                 user.cap_nhat = DateTime.Now;
  //               db.tblnguoidungs.Attach(user);
                 db.Entry(user).State = EntityState.Modified;
@@ -176,6 +177,7 @@ namespace TicketSupport.Areas.Admin.Controllers
         {
             Session["UserId"] = null;
             Session["Username"] = null;
+            Session["UserRoles"] = null;
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 

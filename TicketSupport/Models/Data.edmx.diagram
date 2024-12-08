@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25fb745338c247a281be853af30b3b12" Name="Diagram1">
+      <Diagram DiagramId="75be30a3a800401ba33c8d8bc4205fb5" Name="Diagram1">
         <EntityTypeShape EntityType="Tech_Support_TicketModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Tech_Support_TicketModel.tblchucnang" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblkhachhang" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tech_Support_TicketModel.tblkhachhang" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Tech_Support_TicketModel.tbllichsuthaydoiyeucau" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Tech_Support_TicketModel.tblnguoidung" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Tech_Support_TicketModel.tblphongban" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />

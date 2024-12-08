@@ -1,0 +1,107 @@
+﻿@model TicketSupport.Models.tblkhachhang
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblkhachhang</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ho_ten_khach_hang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ho_ten_khach_hang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.so_dien_thoai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.so_dien_thoai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ten_cong_ty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ten_cong_ty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ma_so_thue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ma_so_thue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phan_mem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phan_mem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mat_khau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mat_khau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ngay_kich_hoat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngay_kich_hoat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trang_thai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trang_thai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cap_nhat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cap_nhat)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ma_khach_hang }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

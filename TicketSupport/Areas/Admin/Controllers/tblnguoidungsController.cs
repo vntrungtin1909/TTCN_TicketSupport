@@ -51,6 +51,40 @@ namespace TicketSupport.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(tblnguoidung tblnguoidung)
         {
+            if (string.IsNullOrEmpty(tblnguoidung.ten_dang_nhap))
+            {
+                ModelState.AddModelError("ten_dang_nhap", "Tên đăng nhập không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.mat_khau))
+            {
+                ModelState.AddModelError("mat_khau", "Mật khẩu không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.email))
+            {
+                ModelState.AddModelError("email", "Email không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.ho_ten_nguoi_dung))
+            {
+                ModelState.AddModelError("ho_ten_nguoi_dung", "Họ tên người dùng không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.ma_nguoi_dung))
+            {
+                ModelState.AddModelError("ma_nguoi_dung", "Mã người dùng không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.so_dien_thoai))
+            {
+                ModelState.AddModelError("so_dien_thoai", "Số điện thoại không được để trống");
+            }
+            bool emailExists = db.tblnguoidungs.Any(kh => kh.email == tblnguoidung.email);
+            if (emailExists)
+            {
+                ModelState.AddModelError("email", "Email đã tồn tại trong hệ thống");
+            }
+            bool userExists = db.tblnguoidungs.Any(kh => kh.email == tblnguoidung.email);
+            if (userExists)
+            {
+                ModelState.AddModelError("ten_dang_nhap", "Tên đăng nhập đã tồn tại trong hệ thống");
+            }
             if (ModelState.IsValid)
             {
                 string plainPass = tblnguoidung.mat_khau;
@@ -100,6 +134,32 @@ namespace TicketSupport.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(tblnguoidung tblnguoidung)
         {
+            
+            if (string.IsNullOrEmpty(tblnguoidung.mat_khau) || tblnguoidung.mat_khau.Trim() == "")
+            {
+                ModelState.AddModelError("mat_khau", "Mật khẩu không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.email) || tblnguoidung.email.Trim() == "")
+            {
+                ModelState.AddModelError("email", "Email không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.ten_dang_nhap) || tblnguoidung.ten_dang_nhap.Trim() == "")
+            {
+                ModelState.AddModelError("ten_dang_nhap", "Tên đăng nhập không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.ho_ten_nguoi_dung) || tblnguoidung.ho_ten_nguoi_dung.Trim() == "")
+            {
+                ModelState.AddModelError("ho_ten_nguoi_dung", "Họ tên người dùng không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.ma_nguoi_dung) || tblnguoidung.ma_nguoi_dung.Trim() == "")
+            {
+                ModelState.AddModelError("ma_nguoi_dung", "Mã người dùng không được để trống");
+            }
+            if (string.IsNullOrEmpty(tblnguoidung.so_dien_thoai) || tblnguoidung.so_dien_thoai.Trim() == "")
+            {
+                ModelState.AddModelError("so_dien_thoai", "Số điện thoại không được để trống");
+            }
+
             if (ModelState.IsValid)
             {
                 tblnguoidung user = db.tblnguoidungs.AsNoTracking().FirstOrDefault(u => u.ma_nguoi_dung == tblnguoidung.ma_nguoi_dung);
@@ -117,6 +177,25 @@ namespace TicketSupport.Areas.Admin.Controllers
                 {
                     tblnguoidung.mat_khau = user.mat_khau;
                 }
+                if (tblnguoidung.ten_dang_nhap == user.ten_dang_nhap)
+                {
+                    tblnguoidung.ten_dang_nhap = user.ten_dang_nhap;
+                }
+                else if (tblnguoidung.ten_dang_nhap != user.ten_dang_nhap && db.tblnguoidungs.Any(u => u.ten_dang_nhap == tblnguoidung.ten_dang_nhap))
+                {
+                    TempData["message"] = new XMessage("danger", "Tên đăng nhập đã tồn tại");
+                    return View();
+                }
+                if (tblnguoidung.email == user.email)
+                {
+                    tblnguoidung.email = user.email;
+                }
+                else if (tblnguoidung.email != user.email && db.tblnguoidungs.Any(u => u.email == tblnguoidung.email))
+                {
+                    TempData["message"] = new XMessage("danger", "Email đã tồn tại");
+                    return View();
+                }
+
                 tblnguoidung.cap_nhat = DateTime.Now;
                 db.Entry(tblnguoidung).State = EntityState.Modified;
                 db.SaveChanges();
