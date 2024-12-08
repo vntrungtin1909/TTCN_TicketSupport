@@ -67,10 +67,6 @@ namespace TicketSupport.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("ho_ten_nguoi_dung", "Họ tên người dùng không được để trống");
             }
-            if (string.IsNullOrEmpty(tblnguoidung.ma_nguoi_dung))
-            {
-                ModelState.AddModelError("ma_nguoi_dung", "Mã người dùng không được để trống");
-            }
             if (string.IsNullOrEmpty(tblnguoidung.so_dien_thoai))
             {
                 ModelState.AddModelError("so_dien_thoai", "Số điện thoại không được để trống");
@@ -87,6 +83,18 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+                tblnguoidung lastUser = db.tblnguoidungs
+                                    .OrderByDescending(kh => kh.ma_nguoi_dung)
+                                    .FirstOrDefault();
+                if (lastUser == null)
+                {
+                    tblnguoidung.ma_nguoi_dung = "NV00001";
+                }
+                else
+                {
+                    int num = int.Parse(lastUser.ma_nguoi_dung.Substring(2));
+                    tblnguoidung.ma_nguoi_dung = "NV" + (num + 1).ToString("D5");
+                }
                 string plainPass = tblnguoidung.mat_khau;
                 tblnguoidung.mat_khau = MaHoa.HashPassword(plainPass);
                 tblnguoidung.trang_thai = true;
