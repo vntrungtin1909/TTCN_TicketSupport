@@ -15,7 +15,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Official Signup Form Responsive, Login form web template,Flat Pricing tables,Flat Drop downs  Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- fonts -->
     <link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
@@ -24,6 +23,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="~/Public/web/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Public/web/css/style.css" rel='stylesheet' type='text/css' media="all" />
     <!-- /css -->
+    <script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
     <style>
         .form-control {
             margin-bottom: 15px;
@@ -66,11 +66,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <h2 class="agileits1">Success</h2>
                 <p class="agileits2">Bạn đã cập nhật mật khẩu thành công</p>
             }
-            else if (ViewBag.Captcha != null)
-            {
-                <h2 class="agileits1">fail</h2>
-                <p class="agileits2">Captcha không đúng</p>
-            }
+            @*else if (ViewBag.Captcha != null)
+                {
+                    <h2 class="agileits1">fail</h2>
+                    <p class="agileits2">Captcha không đúng</p>
+                }*@
             else if (ViewBag.User != null)
             {
                 <h2 class="agileits1">fail</h2>
@@ -93,8 +93,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "fromCaptcha" }))
             {
                 @*<div class="form-control w3layouts">
-                <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
-            </div>*@
+                        <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
+                    </div>*@
 
                 <div class="form-control w3layouts">
                     @*<input type="email" id="email" name="email" placeholder="mail@example.com" title="Please enter a valid email" required="">*@
@@ -107,26 +107,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 </div>
                 @*<div class="form-control w3layouts">
-                @Html.Captcha("Thử lại", "Nhập những gì bạn thấy", 5, "Bắt buộc", true)
+                    @Html.Captcha("Thử lại", "Nhập những gì bạn thấy", 5, "Bắt buộc", true)
 
-                <p class="wthree w3l text-danger">@ViewBag.Error</p>
-                </div>*@
+                    <p class="wthree w3l text-danger">@ViewBag.Error</p>
+                    </div>*@
                 <!-- CAPTCHA section -->
-                <div class="form-control w3layouts captcha-container">
-                    <label for="captcha" style="color: white;">Nhập mã CAPTCHA:</label>
-                    <input type="text" id="captcha" name="captcha" placeholder="Nhập mã CAPTCHA" required class="form-control" />
-                    <br />
-                    <img src="@Url.Action("GenerateCaptcha", "Login")" alt="CAPTCHA" id="captchaImage" />
-                    <button type="button" class="captcha-reload-button" onclick="document.getElementById('captchaImage').src = '@Url.Action("GenerateCaptcha", "Login")?' + new Date().getTime();">Tải lại</button>
+                <div class="captcha-container" style="display: flex; justify-content: center; margin-bottom: 20px;">
+                    <div class="g-recaptcha" data-sitekey="6LeaeJUqAAAAALlxmDMyB_-it97nc-rjj9LtVilo"></div>
                 </div>
+
 
                 @Html.ValidationSummary(false, "", new { @class = "text-danger", style = "color: red; text-align: center" })
 
                 @*<div class="form-control agileinfo">
-                <input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
-            </div>*@
+                        <input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
+                    </div>*@
 
-                <input type="submit" class="register" value="Login">
+                <input type="submit" class="register" id="bntsubmit" value="Login">
                 <div style="text-align:center; margin-top:10px;">
                     <a href="@Url.Action("ForgotPassword", "Login")">Quên mật khẩu?</a>
                 </div>
@@ -141,9 +138,45 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </ul>
         </div>
         <div class="clear"></div>
+        <div class="clear"></div>
     </div>
     <p class="copyright w3l">© 2017 Official Signup Form. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">W3layouts</a></p>
+    <script>
+        // Bắt sự kiện click cho nút Submit
+        $("#btnSubmit").click(function (event) {
+            event.preventDefault(); // Ngăn form submit mặc định
+
+            var captcharesponse = grecaptcha.getResponse();
+
+            // Kiểm tra nếu captcha không được nhập
+            if (!captcharesponse) {
+                alert("Vui lòng xác nhận Captcha.");
+                return;
+            }
+
+            // Gửi dữ liệu captcha qua AJAX
+            $.ajax({
+                type: "POST",
+                url: "/Login/VerifyCaptcha", // Đường dẫn đến API xác thực captcha trong controller
+                data: JSON.stringify({ captcha: captcharesponse }),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response.success) {
+                        alert("Captcha hợp lệ. Đăng nhập thành công!");
+                        // Tiếp tục gửi form nếu cần thiết
+                        $("#fromCaptcha").submit();
+                    } else {
+                        alert("Captcha không hợp lệ. Vui lòng thử lại.");
+                    }
+                },
+                error: function (err) {
+                    console.error("Lỗi khi gửi yêu cầu Captcha:", err);
+                    alert("Đã xảy ra lỗi khi xác thực Captcha.");
+                }
+            });
+        });
+    </script>
+
+
 </body>
 </html>
-
-

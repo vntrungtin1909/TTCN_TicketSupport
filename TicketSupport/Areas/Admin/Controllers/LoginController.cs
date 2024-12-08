@@ -12,6 +12,11 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.IO;
 using BCrypt.Net;
+using hbehr.recaptcha;
+using System.Web.Services;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
@@ -45,11 +50,7 @@ namespace TicketSupport.Areas.Admin.Controllers
         public ActionResult Login(string email, string mat_khau, string captcha)
         {
 
-            if (Session["Captcha"] == null || Session["Captcha"].ToString() != captcha)
-            {
-                ViewBag.Captcha = "CAPTCHA không hợp lệ. Vui lòng thử lại.";
-                return View("Index");
-            }
+            
             tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.email == email || u.ten_dang_nhap == email || u.mat_khau == mat_khau);
 
             if (user == null )
@@ -178,48 +179,111 @@ namespace TicketSupport.Areas.Admin.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        [HttpGet]
-        public ActionResult GenerateCaptcha()
-        {
-            string captchaCode = GenerateRandomCode(6); // Số ký tự của mã CAPTCHA
-            Session["Captcha"] = captchaCode; // Lưu mã CAPTCHA vào Session
+        //[HttpGet]
+        //public ActionResult GenerateCaptcha()
+        //{
+        //    string captchaCode = GenerateRandomCode(6); // Số ký tự của mã CAPTCHA
+        //    Session["Captcha"] = captchaCode; // Lưu mã CAPTCHA vào Session
 
-            using (var bitmap = new Bitmap(200, 50))
-            using (var graphics = Graphics.FromImage(bitmap))
+        //    using (var bitmap = new Bitmap(200, 50))
+        //    using (var graphics = Graphics.FromImage(bitmap))
+        //    {
+        //        // Tạo màu nền và màu văn bản
+        //        graphics.Clear(Color.White);
+        //        using (var font = new Font("Arial", 20, FontStyle.Bold))
+        //        {
+        //            using (var brush = new SolidBrush(Color.Black))
+        //            {
+        //                graphics.DrawString(captchaCode, font, brush, new PointF(10, 10));
+        //            }
+        //        }
+
+        //        // Thêm các đường nét ngẫu nhiên để làm khó nhận diện
+        //        var pen = new Pen(Color.Gray, 2);
+        //        for (int i = 0; i < 5; i++)
+        //        {
+        //            graphics.DrawLine(pen, new PointF(i * 40, 0), new PointF(i * 40, 50));
+        //        }
+
+        //        using (var memoryStream = new MemoryStream())
+        //        {
+        //            bitmap.Save(memoryStream, ImageFormat.Png);
+        //            return File(memoryStream.ToArray(), "image/png");
+        //        }
+        //    }
+        //}
+
+        //private string GenerateRandomCode(int length)
+        //{
+        //    var random = new Random();
+        //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        //    return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        //}
+            private const string RecaptchaSecretKey = "YOUR_SECRET_KEY"; // Thay bằng Secret Key của bạn
+            private const string RecaptchaVerifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+
+            [HttpPost]
+            public async Task<JsonResult> VerifyCaptcha(string captcha)
             {
-                // Tạo màu nền và màu văn bản
-                graphics.Clear(Color.White);
-                using (var font = new Font("Arial", 20, FontStyle.Bold))
+                try
                 {
-                    using (var brush = new SolidBrush(Color.Black))
+                    if (string.IsNullOrEmpty(captcha))
                     {
-                        graphics.DrawString(captchaCode, font, brush, new PointF(10, 10));
+                        return Json(new { success = false, message = "Captcha không được để trống." });
+                    }
+
+                    using (var client = new HttpClient())
+                    {
+                        // Chuẩn bị dữ liệu gửi tới API reCAPTCHA
+                        var values = new FormUrlEncodedContent(new[]
+                        {
+                        new KeyValuePair<string, string>("secret", RecaptchaSecretKey),
+                        new KeyValuePair<string, string>("response", captcha)
+                    });
+
+                        // Gửi yêu cầu đến API của Google
+                        var response = await client.PostAsync(RecaptchaVerifyUrl, values);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            return Json(new { success = false, message = "Không thể xác thực reCAPTCHA." });
+                        }
+
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var captchaResult = JsonConvert.DeserializeObject<RecaptchaResponse>(responseContent);
+
+                        // Kiểm tra kết quả từ Google
+                        if (captchaResult.Success)
+                        {
+                            return Json(new { success = true, message = "Captcha hợp lệ." });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "Captcha không hợp lệ." });
+                        }
                     }
                 }
-
-                // Thêm các đường nét ngẫu nhiên để làm khó nhận diện
-                var pen = new Pen(Color.Gray, 2);
-                for (int i = 0; i < 5; i++)
+                catch (Exception ex)
                 {
-                    graphics.DrawLine(pen, new PointF(i * 40, 0), new PointF(i * 40, 50));
-                }
-
-                using (var memoryStream = new MemoryStream())
-                {
-                    bitmap.Save(memoryStream, ImageFormat.Png);
-                    return File(memoryStream.ToArray(), "image/png");
+                    // Xử lý lỗi
+                    return Json(new { success = false, message = "Đã xảy ra lỗi: " + ex.Message });
                 }
             }
-        }
 
-        private string GenerateRandomCode(int length)
-        {
-            var random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+            // Lớp để ánh xạ dữ liệu từ phản hồi của Google reCAPTCHA
+            public class RecaptchaResponse
+            {
+                [JsonProperty("success")]
+                public bool Success { get; set; }
 
-       
-        
+                [JsonProperty("challenge_ts")]
+                public DateTime ChallengeTimestamp { get; set; }
+
+                [JsonProperty("hostname")]
+                public string Hostname { get; set; }
+
+                [JsonProperty("error-codes")]
+                public string[] ErrorCodes { get; set; }
+            }
+        }
     }
-}
+
