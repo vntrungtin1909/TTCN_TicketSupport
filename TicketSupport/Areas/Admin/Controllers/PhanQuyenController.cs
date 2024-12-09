@@ -76,29 +76,6 @@ namespace TicketSupport.Areas.Admin.Controllers
             return View(tblphongban);
         }
 
-        //[HttpPost]
-        //public ActionResult Edit(tblphongban tblphongban, List<string> SelectedQuyen)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var phongban = db.tblphongbans.Include("tblquyens").FirstOrDefault(pb => pb.ma_phong_ban == tblphongban.ma_phong_ban);
-        //        if (phongban == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        phongban.ten_phong_ban = tblphongban.ten_phong_ban;
-        //        phongban.trang_thai = tblphongban.trang_thai;
-        //        phongban.tblquyens.Clear();
-        //        phongban.tblquyens = db.tblquyens.Where(q => SelectedQuyen.Contains(q.ma_quyen)).ToList();
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", SelectedQuyen);
-        //    return View(tblphongban);
-        //}
-
         [HttpPost]
         public ActionResult Edit(tblphongban tblphongban, List<string> SelectedQuyen)
         {
