@@ -1,0 +1,85 @@
+﻿@model TicketSupport.Models.tblphongban
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="wrapper">
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong class="text-danger">TẠO MỚI PHÒNG BAN</strong>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="@Url.Action("Index", "PhanQuyen")" class="btn-sm btn-info">
+                                    <i class="fa fa-long-arrow-alt-left"></i> Quay lại
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Column 1 -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ma_phong_ban, "Mã phòng ban", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ma_phong_ban, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ma_phong_ban, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ten_phong_ban, "Tên phòng ban", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ten_phong_ban, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ten_phong_ban, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.trang_thai, "Trạng thái", htmlAttributes: new { @class = "control-label col-md-12" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.trang_thai, new[] { new SelectListItem { Text = "Hoạt động", Value = "true" }, new SelectListItem { Text = "Không hoạt động", Value = "false" } }, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.trang_thai, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column 2 -->
+                            <div class="col-md-6">
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Quyền", htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-10">
+                                            @foreach (var item in (MultiSelectList)ViewBag.QuyenList)
+                                            {
+                                                <div class="checkbox">
+                                                    <label style="font-weight: normal">
+                                                        <input type="checkbox" name="SelectedQuyen" value="@item.Value" @(item.Selected ? "checked" : "") />
+                                                        @item.Text
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-sm btn-success" type="submit" name="create">
+                            Lưu <i class="fa fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+}
