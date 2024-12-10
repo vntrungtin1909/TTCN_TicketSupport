@@ -103,7 +103,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                @{                                   
+                                @{
                                     if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("NS")))
                                     {
                                         <li class="nav-item">
@@ -114,8 +114,18 @@
                                         </li>
                                     }
                                 }
-
-                                @{                                    
+                                @{
+                                    if (userRoles != null && userRoles.Contains("ADMIN"))
+                                    {
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("Index", "PhanQuyens")" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Quản lý phòng ban/phân quyền</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                                @{
                                     if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("KH")))
                                     {
                                         <li class="nav-item">
@@ -130,7 +140,7 @@
                         </li>
 
                         <!-- Menu danh mục bài viết-->
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-pen "></i>
                                 <p>
@@ -158,10 +168,10 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
 
                         <!--Menu dành cho giao diện-->
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-book "></i>
                                 <p>
@@ -183,11 +193,11 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
 
 
                         <!--Phàn còn lại của menu-->
-                        <li class="nav-header">LABELS</li>
+                        <!--<li class="nav-header">LABELS</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
@@ -205,7 +215,7 @@
                                 <i class="nav-icon far fa-circle text-info"></i>
                                 <p>Informational</p>
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

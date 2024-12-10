@@ -10,7 +10,7 @@ using TicketSupport.Models;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
-    [AuthorizeRoles("ADMIN", "NS")]
+    [AuthorizeRoles("ADMIN")]
     [MyAuthenFilter]
     public class PhanQuyenController : Controller
     {
