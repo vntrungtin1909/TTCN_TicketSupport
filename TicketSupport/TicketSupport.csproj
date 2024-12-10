@@ -191,7 +191,6 @@
     <Compile Include="Areas\Admin\Controllers\KhachHangsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PhanQuyenController.cs" />
-    <Compile Include="Areas\Admin\Controllers\QuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\tblnguoidungsController.cs" />
     <Compile Include="Areas\Admin\MaHoa.cs" />
     <Compile Include="Areas\Admin\SendMail.cs" />
@@ -332,11 +331,6 @@
     <Content Include="Areas\Admin\Views\PhanQuyen\Details.cshtml" />
     <Content Include="Areas\Admin\Views\PhanQuyen\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\PhanQuyen\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Quyens\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Quyens\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Quyens\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Quyens\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Quyens\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

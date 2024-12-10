@@ -124,18 +124,7 @@
                                             </a>
                                         </li>
                                     }
-                                }
-                                @{
-                                    if (userRoles != null && userRoles.Contains("ADMIN"))
-                                    {
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Index", "Quyens")" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Quản lý quyền</p>
-                                            </a>
-                                        </li>
-                                    }
-                                }
+                                }                                
                                 @{
                                     if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("KH")))
                                     {
