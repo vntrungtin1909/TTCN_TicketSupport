@@ -87,10 +87,25 @@
                         <div class="card text-white bg-danger custom-bg1 h-100">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center">
                                 <i class="fas fa-box-open mb-3"></i>
-                                <h5 class="card-title">Quản lý phòng ban/phân quyền</h5>
+                                <h5 class="card-title">Quản lý phòng ban</h5>
                                 <p class="card-text fs-4">0</p>
                             </div>
                             <a href="@Url.Action("Index", "PhanQuyen")" class="stretched-link"></a>
+                        </div>
+                    </div>
+                }
+                <!-- Phòng ban -->
+
+                @if (userRoles != null && userRoles.Contains("ADMIN"))
+                {
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card text-white bg-danger custom-bg1 h-100">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                <i class="fas fa-box-open mb-3"></i>
+                                <h5 class="card-title">Quản lý quyền</h5>
+                                <p class="card-text fs-4">0</p>
+                            </div>
+                            <a href="@Url.Action("Index", "Quyens")" class="stretched-link"></a>
                         </div>
                     </div>
                 }
@@ -109,43 +124,43 @@
                             <a href="@Url.Action("Index", "KhachHangs")" class="stretched-link"></a>
                         </div>
                     </div>
-                        }
-                    
-                    <!-- Mã Giảm Giá -->
-                    <!--<div class="col-md-6 col-lg-3">
-                        <div class="card text-white bg-warning custom-bg3 h-100">
-                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                <i class="fas fa-percent mb-3"></i>
-                                <h5 class="card-title">Tài khoản khách hàng</h5>
-                                <p class="card-text fs-4">2</p>
-                            </div>
-                            <a href="admin_discounts.php" class="stretched-link"></a>
-                        </div>
-                    </div>-->
-                    <!-- Hóa Đơn -->
-                    <!--<div class="col-md-6 col-lg-3">
-                        <div class="card text-white bg-danger custom-bg4 h-100">
-                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                <i class="fas fa-receipt mb-3"></i>
-                                <h5 class="card-title">Yêu cầu hỗ trợ</h5>
-                                <p class="card-text fs-4">3</p>
-                            </div>
-                            <a href="admin_orders.php" class="stretched-link"></a>
-                        </div>
-                    </div>-->
-                    <!-- Loại Sản Phẩm -->
-                    <!--<div class="col-md-6 col-lg-3">
-                        <div class="card text-white bg-info custom-bg5 h-100">
-                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                <i class="fas fa-tags mb-3"></i>
-                                <h5 class="card-title">Báo cáo</h5>
-                                <p class="card-text fs-4">4</p>
-                            </div>
-                            <a href="admin_categories.php" class="stretched-link"></a>
-                        </div>
-                    </div>-->
-                    <!-- Bạn có thể thêm các thẻ thống kê khác ở đây -->
-                </div>
+                }
+
+                <!-- Mã Giảm Giá -->
+                <!--<div class="col-md-6 col-lg-3">
+        <div class="card text-white bg-warning custom-bg3 h-100">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-percent mb-3"></i>
+                <h5 class="card-title">Tài khoản khách hàng</h5>
+                <p class="card-text fs-4">2</p>
+            </div>
+            <a href="admin_discounts.php" class="stretched-link"></a>
+        </div>
+    </div>-->
+                <!-- Hóa Đơn -->
+                <!--<div class="col-md-6 col-lg-3">
+        <div class="card text-white bg-danger custom-bg4 h-100">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-receipt mb-3"></i>
+                <h5 class="card-title">Yêu cầu hỗ trợ</h5>
+                <p class="card-text fs-4">3</p>
+            </div>
+            <a href="admin_orders.php" class="stretched-link"></a>
+        </div>
+    </div>-->
+                <!-- Loại Sản Phẩm -->
+                <!--<div class="col-md-6 col-lg-3">
+        <div class="card text-white bg-info custom-bg5 h-100">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-tags mb-3"></i>
+                <h5 class="card-title">Báo cáo</h5>
+                <p class="card-text fs-4">4</p>
+            </div>
+            <a href="admin_categories.php" class="stretched-link"></a>
+        </div>
+    </div>-->
+                <!-- Bạn có thể thêm các thẻ thống kê khác ở đây -->
+            </div>
         </section><!-- /.content -->
     </div> <!-- /.content-wrapper -->
 </div><!-- ./wrapper -->
