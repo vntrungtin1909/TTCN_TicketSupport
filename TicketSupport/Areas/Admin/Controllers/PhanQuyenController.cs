@@ -56,6 +56,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", SelectedQuyen);
+            TempData["message"] = new XMessage("success", "Thêm mới phòng ban thành công");
             return View(tblphongban);
         }
 		[AuthorizeRoles("PB-E")]

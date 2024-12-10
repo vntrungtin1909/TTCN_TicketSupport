@@ -14,9 +14,16 @@ namespace TicketSupport.Areas.Admin.Views
 	[MyAuthenFilter]
 	public class DashboardController : Controller
     {
-        // GET: Admin/Dashboard
+        private Tech_Support_TicketEntities db = new Tech_Support_TicketEntities();
+		// GET: Admin/Dashboard
+		[HttpGet]		
+		
         public ActionResult Index()
         {
+			ViewBag.nguoiDung = db.tblnguoidungs.Count().ToString();
+			ViewBag.phongBan = db.tblphongbans.Count().ToString();
+			ViewBag.quyen = db.tblquyens.Count().ToString();
+			ViewBag.khachHang = db.tblkhachhangs.Count().ToString();
 			return View();
         }
 		public ActionResult Unauthorized()

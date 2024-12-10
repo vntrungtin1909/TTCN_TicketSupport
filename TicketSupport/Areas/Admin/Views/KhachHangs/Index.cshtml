@@ -12,7 +12,24 @@
 @section footer{
     <script src="~/Public/js/jquery.dataTables.js"></script>
     <script>
-        let table = new DataTable('#myTable')
+        let table = new DataTable('#myTable', {
+            language: {
+                search: "Tìm kiếm:",
+                zeroRecords: "Không tìm thấy dữ liệu phù hợp",
+                emptyTable: "Không có dữ liệu trong bảng",
+                lengthMenu: "Hiển thị _MENU_ dòng mỗi trang",
+                infoEmpty: "Không có dữ liệu",
+                infoFiltered: "(được lọc từ tổng số _MAX_ dòng)",
+                infoPostFix: "",
+                info: "Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                paginate: {
+                    first: "Trang đầu",
+                    previous: "Trước",
+                    next: "Sau",
+                    last: "Trang cuối"
+                }
+            }
+        });
         setTimeout(function () {
             let messageElement = document.getElementById('message-container');
             if (messageElement) {

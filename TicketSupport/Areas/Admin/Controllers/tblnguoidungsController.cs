@@ -135,6 +135,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 TempData["message"] = new XMessage("danger", "Người dùng không tồn tại");
                 return RedirectToAction("Index");
             }
+            tblnguoidung.mat_khau = "";
             return View(tblnguoidung);
         }
 		[AuthorizeRoles("NS-E")]
@@ -143,10 +144,10 @@ namespace TicketSupport.Areas.Admin.Controllers
         public ActionResult Edit(tblnguoidung tblnguoidung)
         {
             
-            if (string.IsNullOrEmpty(tblnguoidung.mat_khau) || tblnguoidung.mat_khau.Trim() == "")
-            {
-                ModelState.AddModelError("mat_khau", "Mật khẩu không được để trống");
-            }
+            //if (string.IsNullOrEmpty(tblnguoidung.mat_khau) || tblnguoidung.mat_khau.Trim() == "")
+            //{
+            //    ModelState.AddModelError("mat_khau", "Mật khẩu không được để trống");
+            //}
             if (string.IsNullOrEmpty(tblnguoidung.email) || tblnguoidung.email.Trim() == "")
             {
                 ModelState.AddModelError("email", "Email không được để trống");
@@ -177,13 +178,14 @@ namespace TicketSupport.Areas.Admin.Controllers
                     TempData["message"] = new XMessage("danger", "Người dùng không tồn tại");
                     return RedirectToAction("Index");
                 }
-                if (user.mat_khau != tblnguoidung.mat_khau)
+                tblnguoidung.mat_khau += " ";
+                if (tblnguoidung.mat_khau.Trim() == "")
                 {
-                    tblnguoidung.mat_khau = MaHoa.HashPassword(tblnguoidung.mat_khau);
+                    tblnguoidung.mat_khau = user.mat_khau;
                 }
                 else
                 {
-                    tblnguoidung.mat_khau = user.mat_khau;
+                    tblnguoidung.mat_khau = MaHoa.HashPassword(tblnguoidung.mat_khau);
                 }
                 if (tblnguoidung.ten_dang_nhap == user.ten_dang_nhap)
                 {
@@ -203,7 +205,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                     TempData["message"] = new XMessage("danger", "Email đã tồn tại");
                     return View();
                 }
-
+                tblnguoidung.trang_thai = Request.Form["trang_thai"] == "true" ? true : false;
                 tblnguoidung.cap_nhat = DateTime.Now;
                 db.Entry(tblnguoidung).State = EntityState.Modified;
                 db.SaveChanges();
