@@ -53,10 +53,11 @@ namespace TicketSupport.Areas.Admin.Controllers
                 tblphongban.trang_thai = true; // Mặc định kích hoạt
                 db.tblphongbans.Add(tblphongban);
                 db.SaveChanges();
+                TempData["message"] = new XMessage("success", "Thêm mới phòng ban thành công");
                 return RedirectToAction("Index");
             }
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", SelectedQuyen);
-            TempData["message"] = new XMessage("success", "Thêm mới phòng ban thành công");
+            TempData["message"] = new XMessage("danger", "Thêm mới phòng ban thất bại");
             return View(tblphongban);
         }
 		[AuthorizeRoles("PB-E")]
