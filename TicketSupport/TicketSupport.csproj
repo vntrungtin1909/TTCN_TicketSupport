@@ -187,6 +187,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Authorization\AuthorizePermissionsAttribute.cs" />
     <Compile Include="Areas\Admin\Authorization\AuthorizeRolesAttribute.cs" />
     <Compile Include="Areas\Admin\Controllers\KhachHangsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
@@ -296,6 +297,7 @@
     <Content Include="Areas\Admin\Views\Login\ForgotPassword.cshtml" />
     <Content Include="Areas\Admin\Views\Login\ResetPassword.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Unauthorized.cshtml" />
     <Content Include="Models\Data.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Data.edmx</DependentUpon>
@@ -306,7 +308,6 @@
       <DependentUpon>Data.edmx</DependentUpon>
       <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Admin\Views\Dashboard\Unauthorized.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -320,6 +321,11 @@
     <Content Include="Areas\Admin\Views\KhachHangs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\KhachHangs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KhachHangs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhanQuyen\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PhanQuyen\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PhanQuyen\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PhanQuyen\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhanQuyen\Index.cshtml" />
     <EntityDeploy Include="Models\Data.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Data.Designer.cs</LastGenOutput>
@@ -327,11 +333,6 @@
     <Content Include="Models\Data.edmx.diagram">
       <DependentUpon>Data.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\PhanQuyen\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\PhanQuyen\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\PhanQuyen\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\PhanQuyen\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\PhanQuyen\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

@@ -13,20 +13,20 @@ using TicketSupport.Models;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
-    [AuthorizeRoles("ADMIN", "KH")]
+    [AuthorizePermissions("KH")]
     [MyAuthenFilter]
     public class KhachHangsController : Controller
     {
         private Tech_Support_TicketEntities db = new Tech_Support_TicketEntities();
-
-        // GET: Admin/KhachHangs
-        public ActionResult Index()
+		// GET: Admin/KhachHangs
+		[AuthorizeRoles("KH-R")]
+		public ActionResult Index()
         {
             return View(db.tblkhachhangs.ToList());
         }
-
-        // GET: Admin/KhachHangs/Details/5
-        public ActionResult Details(string id)
+		[AuthorizeRoles("KH-R")]
+		// GET: Admin/KhachHangs/Details/5
+		public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -39,16 +39,17 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblkhachhang);
         }
-
-        // GET: Admin/KhachHangs/Create
-        public ActionResult Create()
+		[AuthorizeRoles("KH-C")]
+		// GET: Admin/KhachHangs/Create
+		public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(tblkhachhang tblkhachhang)
+		[AuthorizeRoles("KH-C")]
+		public ActionResult Create(tblkhachhang tblkhachhang)
         {
 
             if (string.IsNullOrEmpty(tblkhachhang.mat_khau))
@@ -109,9 +110,9 @@ namespace TicketSupport.Areas.Admin.Controllers
 
             return View(tblkhachhang);
         }
-
-        // GET: Admin/KhachHangs/Edit/5
-        public ActionResult Edit(string id)
+		[AuthorizeRoles("KH-E")]
+		// GET: Admin/KhachHangs/Edit/5
+		public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -128,8 +129,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblkhachhang);
         }
-
-        [HttpPost]
+		[AuthorizeRoles("KH-E")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(tblkhachhang tblkhachhang)
         {
@@ -190,9 +191,9 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblkhachhang);
         }
-
-        // GET: Admin/KhachHangs/Delete/5
-        public ActionResult Delete(string id)
+		[AuthorizeRoles("KH-D")]
+		// GET: Admin/KhachHangs/Delete/5
+		public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -209,9 +210,9 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblkhachhang);
         }
-
-        // POST: Admin/KhachHangs/Delete/5
-        [HttpPost, ActionName("Delete")]
+		[AuthorizeRoles("KH-D")]
+		// POST: Admin/KhachHangs/Delete/5
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
@@ -221,7 +222,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             TempData["message"] = new XMessage("success", "xóa mẫu tin thành  công");
             return RedirectToAction("Index");
         }
-        public ActionResult Status(string id)
+		[AuthorizeRoles("KH-E", "KH-D", "KH-C")]
+		public ActionResult Status(string id)
         {
             if (id == null)
             {

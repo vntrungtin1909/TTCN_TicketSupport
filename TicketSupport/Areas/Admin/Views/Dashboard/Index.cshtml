@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-    var userRoles = Session["UserRoles"] as List<string>;
+    var userPermissions = Session["UserPermissions"] as List<string>;
 }
 
 <style>
@@ -65,7 +65,7 @@
             <div class="row g-4">
                 <!-- Nhân sự -->
 
-                @if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("NS")))
+                @if (userPermissions != null && userPermissions.Contains("NS"))
                 {
                     <div class="col-md-6 col-lg-3">
                         <div class="card text-white bg-primary custom-bg1 h-100">
@@ -81,7 +81,7 @@
 
                 <!-- Phòng ban -->
 
-                @if (userRoles != null && userRoles.Contains("ADMIN"))
+                @if (userPermissions != null && userPermissions.Contains("PB"))
                 {
                     <div class="col-md-6 col-lg-3">
                         <div class="card text-white bg-danger custom-bg1 h-100">
@@ -97,7 +97,7 @@
 
                 <!-- Khách Hàng -->
 
-                @if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("KH")))
+                @if (userPermissions != null && userPermissions.Contains("KH"))
                 {
                     <div class="col-md-6 col-lg-3">
                         <div class="card text-white bg-warning custom-bg1 h-100">

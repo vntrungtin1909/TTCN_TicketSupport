@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Tech_Support_TicketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Tech_Support_TicketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -21,8 +21,6 @@
           </Key>
           <Property Name="ma_chuc_nang" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ten_chuc_nang" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ngay_tao" Type="datetime" />
-          <Property Name="ngay_cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblkhachhang">
           <Key>
@@ -99,8 +97,6 @@
           <Property Name="ma_quyen" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ma_chuc_nang" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ten_quyen" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ngay_tao" Type="datetime" />
-          <Property Name="cap_nhat" Type="datetime" />
         </EntityType>
         <EntityType Name="tblquyen_phongban">
           <Key>
@@ -310,7 +306,8 @@
             <End Role="tblyeucauhotrokythuat" EntitySet="tblyeucauhotrokythuat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Tech_Support_TicketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -330,8 +327,6 @@
           </Key>
           <Property Name="ma_chuc_nang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ten_chuc_nang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
-          <Property Name="ngay_cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblquyens" Relationship="Self.FK_TBLQUYEN_REFERENCE_TBLCHUCN" FromRole="tblchucnang" ToRole="tblquyen" />
         </EntityType>
         <EntityType Name="tblkhachhang">
@@ -385,9 +380,9 @@
           <Property Name="token_expire" Type="DateTime" Precision="3" />
           <Property Name="ngay_tao" Type="DateTime" Precision="3" />
           <Property Name="cap_nhat" Type="DateTime" Precision="3" />
+          <Property Name="ngay_kich_hoat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tbllichsuthaydoiyeucaus" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLNGUOI" FromRole="tblnguoidung" ToRole="tbllichsuthaydoiyeucau" />
           <NavigationProperty Name="tblphongbans" Relationship="Self.tblnguoidung_phongban" FromRole="tblnguoidung" ToRole="tblphongban" />
-          <Property Name="ngay_kich_hoat" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblphongban">
           <Key>
@@ -409,8 +404,6 @@
           <Property Name="ma_quyen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ma_chuc_nang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ten_quyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
-          <Property Name="cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblchucnang" Relationship="Self.FK_TBLQUYEN_REFERENCE_TBLCHUCN" FromRole="tblquyen" ToRole="tblchucnang" />
           <NavigationProperty Name="tblphongbans" Relationship="Self.tblquyen_phongban" FromRole="tblquyen" ToRole="tblphongban" />
         </EntityType>
@@ -599,8 +592,6 @@
               <MappingFragment StoreEntitySet="tblchucnang">
                 <ScalarProperty Name="ma_chuc_nang" ColumnName="ma_chuc_nang" />
                 <ScalarProperty Name="ten_chuc_nang" ColumnName="ten_chuc_nang" />
-                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
-                <ScalarProperty Name="ngay_cap_nhat" ColumnName="ngay_cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -642,7 +633,6 @@
           <EntitySetMapping Name="tblnguoidungs">
             <EntityTypeMapping TypeName="Tech_Support_TicketModel.tblnguoidung">
               <MappingFragment StoreEntitySet="tblnguoidung">
-                <ScalarProperty Name="ngay_kich_hoat" ColumnName="ngay_kich_hoat" />
                 <ScalarProperty Name="ma_nguoi_dung" ColumnName="ma_nguoi_dung" />
                 <ScalarProperty Name="ho_ten_nguoi_dung" ColumnName="ho_ten_nguoi_dung" />
                 <ScalarProperty Name="ten_dang_nhap" ColumnName="ten_dang_nhap" />
@@ -654,6 +644,7 @@
                 <ScalarProperty Name="token_expire" ColumnName="token_expire" />
                 <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
                 <ScalarProperty Name="cap_nhat" ColumnName="cap_nhat" />
+                <ScalarProperty Name="ngay_kich_hoat" ColumnName="ngay_kich_hoat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -674,8 +665,6 @@
                 <ScalarProperty Name="ma_quyen" ColumnName="ma_quyen" />
                 <ScalarProperty Name="ma_chuc_nang" ColumnName="ma_chuc_nang" />
                 <ScalarProperty Name="ten_quyen" ColumnName="ten_quyen" />
-                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
-                <ScalarProperty Name="cap_nhat" ColumnName="cap_nhat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

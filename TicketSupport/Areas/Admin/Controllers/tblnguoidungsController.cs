@@ -14,20 +14,20 @@ using TicketSupport.Areas.Admin.Authorization;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
-	[AuthorizeRoles("ADMIN", "NS")]
+	[AuthorizePermissions("NS")]
 	[MyAuthenFilter]
     public class tblnguoidungsController : Controller
     {
         private Tech_Support_TicketEntities db = new Tech_Support_TicketEntities();
-
-        // GET: Admin/tblnguoidungs
-        public ActionResult Index()
+		[AuthorizeRoles("NS-R")]
+		// GET: Admin/tblnguoidungs
+		public ActionResult Index()
         {
             return View(db.tblnguoidungs.ToList());
         }
-
-        // GET: Admin/tblnguoidungs/Details/5
-        public ActionResult Details(string id)
+		[AuthorizeRoles("NS-R")]
+		// GET: Admin/tblnguoidungs/Details/5
+		public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -40,14 +40,14 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblnguoidung);
         }
-
-        // GET: Admin/tblnguoidungs/Create
-        public ActionResult Create()
+		[AuthorizeRoles("NS-C")]
+		// GET: Admin/tblnguoidungs/Create
+		public ActionResult Create()
         {
             return View();
         }
-
-        [HttpPost]
+		[AuthorizeRoles("NS-C")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(tblnguoidung tblnguoidung)
         {
@@ -118,9 +118,9 @@ namespace TicketSupport.Areas.Admin.Controllers
 
             return View(tblnguoidung);
         }
-
-        // GET: Admin/tblnguoidungs/Edit/5
-        public ActionResult Edit(string id)
+		[AuthorizeRoles("NS-E")]
+		// GET: Admin/tblnguoidungs/Edit/5
+		public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -137,8 +137,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblnguoidung);
         }
-
-        [HttpPost]
+		[AuthorizeRoles("NS-E")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(tblnguoidung tblnguoidung)
         {
@@ -213,9 +213,9 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblnguoidung);
         }
-
-        // GET: Admin/tblnguoidungs/Delete/5
-        public ActionResult Delete(string id)
+		[AuthorizeRoles("NS-D")]
+		// GET: Admin/tblnguoidungs/Delete/5
+		public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -232,9 +232,9 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblnguoidung);
         }
-
-        // POST: Admin/tblnguoidungs/Delete/5
-        [HttpPost, ActionName("Delete")]
+		[AuthorizeRoles("NS-D")]
+		// POST: Admin/tblnguoidungs/Delete/5
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
@@ -245,8 +245,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             TempData["message"] = new XMessage("success", "xóa mẫu tin thành  công");
             return RedirectToAction("Index");
         }
-       
-        public ActionResult Status(string id)
+		[AuthorizeRoles("NS-C", "NS-E", "NS-D")]
+		public ActionResult Status(string id)
         {
             if (id == null)
             {

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Danh sách phòng ban";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var userRoles = Session["UserRoles"] as List<string>;
 }
 
 @section header {
@@ -34,11 +35,12 @@
                         <div class="col-md-6">
                             <strong class="text-danger">DANH SÁCH PHÒNG BAN</strong>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <a href="@Url.Action("Create", "PhanQuyen", new { area = "Admin" })" class="btn-sm btn-success">
-                                <i class="fa fa-plus"></i> Thêm
-                            </a>
-                        </div>
+                        @if (userRoles != null && userRoles.Contains("PB-C"))
+                        {
+                            <div class="col-md-6 text-right">
+                                <a href="@Url.Action("Create", "PhanQuyen") " class="btn-sm btn-success"><i class="fa fa-plus"></i> Thêm</a>                                
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="card-body">
@@ -82,25 +84,34 @@
                                         }
                                     </td>
                                     <td>
-                                        @if (item.trang_thai == true)
+                                        @if (userRoles != null && (userRoles.Contains("PB-C") || userRoles.Contains("PB-E") || userRoles.Contains("PB-D")))
                                         {
-                                            <a href="@Url.Action("Status", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-success">
-                                                <i class="fa fa-toggle-on"></i>
+                                            if (item.trang_thai == true)
+                                            {
+                                                <a href="@Url.Action("Status", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-success">
+                                                    <i class="fa fa-toggle-on"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Status", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-danger">
+                                                    <i class="fa fa-toggle-off"></i>
+                                                </a>
+                                            }
+                                        }
+                                        @if (userRoles != null && userRoles.Contains("PB-E"))
+                                        {
+                                            <a href="@Url.Action("Edit", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-primary">
+                                                <i class="fa fa-edit"></i>
                                             </a>
                                         }
-                                        else
+                                        @if (userRoles != null && userRoles.Contains("PB-D"))
                                         {
-                                            <a href="@Url.Action("Status", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-danger">
-                                                <i class="fa fa-toggle-off"></i>
+                                            <a href="@Url.Action("Delete", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         }
-                                        <a href="@Url.Action("Edit", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-primary">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="@Url.Action("Delete", "PhanQuyen", new { id = item.ma_phong_ban, area = "Admin" })" class="btn-sm btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
+                                        </td>
                                 </tr>
                             }
                         </tbody>

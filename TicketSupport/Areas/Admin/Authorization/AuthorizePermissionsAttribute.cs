@@ -6,23 +6,23 @@ using System.Web.Mvc;
 
 namespace TicketSupport.Areas.Admin.Authorization
 {
-	public class AuthorizeRolesAttribute : AuthorizeAttribute
+	public class AuthorizePermissionsAttribute : AuthorizeAttribute
 	{
-		private readonly string[] _roles;
+		private readonly string[] _permissions;
 
-		public AuthorizeRolesAttribute(params string[] roles)
+		public AuthorizePermissionsAttribute(params string[] permissions)
 		{
-			_roles = roles;
+			_permissions = permissions;
 		}
 
 		protected override bool AuthorizeCore(HttpContextBase httpContext)
 		{
-			var userRoles = (List<string>)httpContext.Session["UserRoles"];
-			if (userRoles == null)
+			var userpermissions = (List<string>)httpContext.Session["UserPermissions"];
+			if (userpermissions == null)
 				return false;
 
 			// Kiểm tra nếu người dùng có ít nhất một quyền yêu cầu
-			return userRoles.Intersect(_roles).Any();
+			return userpermissions.Intersect(_permissions).Any();
 		}
 
 		protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
@@ -32,7 +32,7 @@ namespace TicketSupport.Areas.Admin.Authorization
 				new System.Web.Routing.RouteValueDictionary
 				{
 					{ "controller", "Dashboard" },
-					{ "action", "Unauthorized" }
+					{ "action", "Unauthorized" }  
 				}
 			);
 		}

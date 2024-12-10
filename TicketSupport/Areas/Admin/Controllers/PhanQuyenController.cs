@@ -10,19 +10,19 @@ using TicketSupport.Models;
 
 namespace TicketSupport.Areas.Admin.Controllers
 {
-    [AuthorizeRoles("ADMIN")]
+    [AuthorizePermissions("PB")]
     [MyAuthenFilter]
     public class PhanQuyenController : Controller
     {
         Tech_Support_TicketEntities db = new Tech_Support_TicketEntities();
-
-        public ActionResult Index()
+		[AuthorizeRoles("PB-R")]
+		public ActionResult Index()
         {
             return View(db.tblphongbans.ToList());
         }
-
-        // GET: Details
-        public ActionResult Details(string id)
+		[AuthorizeRoles("PB-R")]
+		// GET: Details
+		public ActionResult Details(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -36,15 +36,15 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblphongban);
         }
-
-        // GET: Create
-        public ActionResult Create()
+		[AuthorizeRoles("PB-C")]
+		// GET: Create
+		public ActionResult Create()
         {
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen");
             return View();
         }
-
-        [HttpPost]
+		[AuthorizeRoles("PB-C")]
+		[HttpPost]
         public ActionResult Create(tblphongban tblphongban, List<string> SelectedQuyen)
         {
             if (ModelState.IsValid)
@@ -58,9 +58,9 @@ namespace TicketSupport.Areas.Admin.Controllers
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", SelectedQuyen);
             return View(tblphongban);
         }
-
-        // GET: Edit
-        public ActionResult Edit(string id)
+		[AuthorizeRoles("PB-E")]
+		// GET: Edit
+		public ActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -75,8 +75,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", tblphongban.tblquyens.Select(q => q.ma_quyen));
             return View(tblphongban);
         }
-
-        [HttpPost]
+		[AuthorizeRoles("PB-E")]
+		[HttpPost]
         public ActionResult Edit(tblphongban tblphongban, List<string> SelectedQuyen)
         {
             if (ModelState.IsValid)
@@ -103,10 +103,10 @@ namespace TicketSupport.Areas.Admin.Controllers
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", SelectedQuyen);
             return View(tblphongban);
         }
+		[AuthorizeRoles("PB-D")]
 
-
-        // GET: Delete
-        public ActionResult Delete(string id)
+		// GET: Delete
+		public ActionResult Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -120,8 +120,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
             return View(tblphongban);
         }
-
-        [HttpPost, ActionName("Delete")]
+		[AuthorizeRoles("PB-D")]
+		[HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -139,9 +139,9 @@ namespace TicketSupport.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        // GET: Status
-        public ActionResult Status(string id)
+		[AuthorizeRoles("PB-C", "PB-E", "PB-D")]
+		// GET: Status
+		public ActionResult Status(string id)
         {
             if (string.IsNullOrEmpty(id))
             {

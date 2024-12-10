@@ -18,7 +18,7 @@
 </head>
 
 @{
-    var userRoles = Session["UserRoles"] as List<string>;
+    var userPermissions = Session["UserPermissions"] as List<string>;
 }
 
 @*Khu vuc body*@
@@ -104,7 +104,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 @{
-                                    if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("NS")))
+                                    if (userPermissions != null && userPermissions.Contains("NS"))
                                     {
                                         <li class="nav-item">
                                             <a href="@Url.Action("Index", "tblnguoidungs")" class="nav-link">
@@ -115,7 +115,7 @@
                                     }
                                 }
                                 @{
-                                    if (userRoles != null && userRoles.Contains("ADMIN"))
+                                    if (userPermissions != null && userPermissions.Contains("PB"))
                                     {
                                         <li class="nav-item">
                                             <a href="@Url.Action("Index", "PhanQuyen")" class="nav-link">
@@ -126,7 +126,7 @@
                                     }
                                 }                                
                                 @{
-                                    if (userRoles != null && (userRoles.Contains("ADMIN") || userRoles.Contains("KH")))
+                                    if (userPermissions != null && userPermissions.Contains("KH"))
                                     {
                                         <li class="nav-item">
                                             <a href="@Url.Action("Index", "KhachHangs")" class="nav-link">

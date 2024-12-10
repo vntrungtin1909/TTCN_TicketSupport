@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var userRoles = Session["UserRoles"] as List<string>;
 }
 @section header {
     <link rel="stylesheet" href="~/Public/css/jquery.dataTables.css" />
@@ -34,13 +35,15 @@
                         <div class="col-md-6">
                             <strong class="text-danger">DANH SÁCH NGƯỜI SỬ DỤNG</strong>
                         </div>
-
-                        <div class="col-md-6 text-right">
-                            <a href="@Url.Action("Create", "tblnguoidungs") " class="btn-sm btn-success"><i class="fa fa-plus"></i> Thêm</a>
-                            @*<a href="@Url.Action("Trash", "tblnguoidungs") " class="btn-sm btn-danger"><i class="fa fa-trash"></i> Thùng rác</a>*@
-                            @*<div>@Html.ActionLink("Create New", "Create") </div>*@
+                        @if (userRoles != null && userRoles.Contains("NS-C"))
+                        {
+                            <div class="col-md-6 text-right">
+                                <a href="@Url.Action("Create", "tblnguoidungs") " class="btn-sm btn-success"><i class="fa fa-plus"></i> Thêm</a>
+                                @*<a href="@Url.Action("Trash", "tblnguoidungs") " class="btn-sm btn-danger"><i class="fa fa-trash"></i> Thùng rác</a>*@
+                                @*<div>@Html.ActionLink("Create New", "Create") </div>*@
+                            </div>
+                        }
                         </div>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div id="message-container">
@@ -88,18 +91,25 @@
                                         @Html.DisplayFor(modelItem => item.so_dien_thoai)
                                     </td>
                                     <td>
-                                        @if (item.trang_thai == true)
+                                        @if (userRoles != null && (userRoles.Contains("NS-C") || userRoles.Contains("NS-E") || userRoles.Contains("NS-D")))
                                         {
-                                            <a href="@Url.Action("Status", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-success"><i class="fa fa-toggle-on"></i></a>
+                                            if (item.trang_thai == true)
+                                            {
+                                                <a href="@Url.Action("Status", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-success"><i class="fa fa-toggle-on"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Status", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-danger"><i class="fa fa-toggle-off"></i></a>
+                                            }
                                         }
-                                        else
+                                        @if (userRoles != null && userRoles.Contains("NS-E"))
                                         {
-                                            <a href="@Url.Action("Status", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-danger"><i class="fa fa-toggle-off"></i></a>
+                                            <a href="@Url.Action("Edit", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                                         }
-                                        <a href="@Url.Action("Edit", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                        @*<a href="@Url.Action("Details", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-info"><i class="fa fa-eye"></i></a>*@
-                                        @*<a href="@Url.Action("MoveTrash", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>*@
-                                        <a href="@Url.Action("Delete", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        @if (userRoles != null && userRoles.Contains("NS-D"))
+                                        {
+                                            <a href="@Url.Action("Delete", "tblnguoidungs", new { id = item.ma_nguoi_dung }) " class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        }
                                     </td>
 
                                 </tr>

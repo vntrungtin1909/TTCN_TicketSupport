@@ -46,6 +46,18 @@ namespace TicketSupport.Areas.Admin.Controllers
 
 			return roles;
 		}
+		public List<string> GetUserPermisions(string userId)
+		{
+			var permission = db.tblnguoidungs
+				.Where(nd => nd.ma_nguoi_dung == userId)
+				.SelectMany(nd => nd.tblphongbans)
+				.SelectMany(pb => pb.tblquyens)
+				.Select(cn => cn.tblchucnang).Select(mcn=>mcn.ma_chuc_nang)
+				.Distinct()
+				.ToList();
+
+			return permission;
+		}
 		[HttpPost]
         public ActionResult Login(string email, string mat_khau, string captcha)
         {
@@ -75,11 +87,13 @@ namespace TicketSupport.Areas.Admin.Controllers
                 return Redirect(resetLink);
             }
 			var userRoles = GetUserRoles(user.ma_nguoi_dung);
+			var userPermissions = GetUserPermisions(user.ma_nguoi_dung);
 
 
 			Session["UserId"] = user.ma_nguoi_dung;
             Session["Username"] = user.ho_ten_nguoi_dung;
             Session["UserRoles"] = userRoles; // Lưu danh sách quyền vào Session
+            Session["UserPermissions"] = userPermissions; // Lưu danh sách chức năng vào Session
             //return RedirectToAction("Index", "Home");
 			return RedirectToAction("Index", "Dashboard");
 
