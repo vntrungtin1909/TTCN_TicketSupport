@@ -33,6 +33,6 @@ namespace TicketSupport.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblnguoidung> tblnguoidungs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblquyen> tblquyens { get; set; }		
-	}
+        public virtual ICollection<tblquyen> tblquyens { get; set; }
+    }
 }
