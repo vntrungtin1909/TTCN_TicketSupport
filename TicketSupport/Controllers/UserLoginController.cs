@@ -123,10 +123,10 @@ namespace TicketSupport.Controllers
             Console.WriteLine($"Sending email to {toEmail} with subject {subject}");
         }
 
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
+        public ActionResult Register()
+        {
+            return View();
+        }
 
         //// POST: Register
         //[HttpPost]
