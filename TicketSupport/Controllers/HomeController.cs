@@ -26,5 +26,17 @@ namespace TicketSupport.Controllers
 
             return View();
         }
+        public ActionResult Do()
+        {
+            ViewBag.Message = "Your Do page.";
+
+            return View();
+        }
+        public ActionResult Portfolio()
+        {
+            ViewBag.Message = "Your Portfolio page.";
+
+            return View();
+        }
     }
 }

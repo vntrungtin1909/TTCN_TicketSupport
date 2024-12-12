@@ -81,10 +81,6 @@
     <script src="~/Public/userlog/js.js"></script>
 </body>
 </html>-->
-@**@
-@**@
-@**@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,33 +88,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="icon" type="image/png" href="~/Content/Images/Icons/favicon.ico" />
+<link rel="icon" type="image/png" href="~/Content/images/Icons/favicon.ico" />
 
-<link rel="stylesheet" type="text/css" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Vendor/bootstrap/css/bootstrap.min.css">
 
 <link rel="stylesheet" type="text/css" href="~/Fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" type="text/css" href="~/Content/vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Vendor/animate/animate.css">
 
-<link rel="stylesheet" type="text/css" href="~/Content/vendor/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Vendor/css-hamburgers/hamburgers.min.css">
 
-<link rel="stylesheet" type="text/css" href="~/Content/vendor/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Vendor/select2/select2.min.css">
 
 <link rel="stylesheet" type="text/css" href="~/Content/util.css">
 <link rel="stylesheet" type="text/css" href="~/Content/Login_v1.css">
+<style>
+        .container-login100 {
+    background: url('@Url.Content("~/Content/images/hero-bg.jpg")');
+    background-size: cover; /* Đảm bảo hình nền bao phủ toàn bộ màn hình */
+    background-position: center; /* Căn giữa hình nền */
+    width: 100%;
+    min-height: 100vh; /* Chiều cao tối thiểu bằng chiều cao của cửa sổ trình duyệt */
+    display: flex;
+    align-items: center; /* Căn giữa theo trục dọc */
+    justify-content: center; /* Căn giữa theo trục ngang */
+    position: relative; /* Cho phép định vị các phần tử con */
+    z-index: 1;
+}
 
+.wrap-login100 {
+    background: rgba(255, 255, 255, 0.8); /* Nền trắng mờ cho form */
+    padding: 30px;
+    border-radius: 10px; /* Bo góc cho form */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Đổ bóng */
+    z-index: 2; /* Hiển thị phía trên hình nền */
+    position: relative;
+    width: 100%;
+    max-width: 400px; /* Đặt chiều rộng tối đa cho form */
+
+}
+
+
+
+
+</style>
 </head>
 <body>
-
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="~/Content/Images/img-01.png" alt="IMG">
-                </div>
-
-                <form class="login100-form validate-form">
-                    <span class="login100-form-title">
+                <form class="login100-form validate-form" style="margin-left:27px">
+                    <span class="login100-form-title" >
                         Member Login
                     </span>
 
@@ -148,13 +168,13 @@
                         <span class="txt1">
                             Forgot
                         </span>
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="@Url.Action("ForgotPassword", "UserLogin")">
                             Username / Password?
                         </a>
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="@Url.Action("Register", "UserLogin")">
                             Create your Account
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>
@@ -162,16 +182,17 @@
                 </form>
             </div>
         </div>
+
     </div>
 
 <script src="~/Content/vendor/jquery/jquery-3.2.1.min.js"></script>
 
-<script src="~/Content/vendor/bootstrap/js/popper.js"></script>
-<script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Content/Vendor/bootstrap/js/popper.js"></script>
+<script src="~/Content/Vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="~/Content/vendor/select2/select2.min.js"></script>
+<script src="~/Content/Vendor/select2/select2.min.js"></script>
 
-<script src="~/Content/vendor/tilt/tilt.jquery.min.js"></script>
+<script src="~/Content/Vendor/tilt/tilt.jquery.min.js"></script>
 <script>
     $('.js-tilt').tilt({
         scale: 1.1

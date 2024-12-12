@@ -64,6 +64,8 @@ namespace TicketSupport.Models
 
     public class RegisterViewModel
     {
+        internal string ho_ten_khach_hang;
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -108,5 +110,46 @@ namespace TicketSupport.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+    public class Register
+    {
+        // HoTenKhachHang không cần đánh dấu Required, vì có thể để trống
+        [Required(ErrorMessage = "Họ tên khách hàng là bắt buộc.")]
+        [Display(Name = "Full Name")]
+        public string HoTenKhachHang { get; set; }
+
+        [Required(ErrorMessage = "Email là bắt buộc.")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Số điện thoại là bắt buộc.")]
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
+        [Display(Name = "Phone Number")]
+        public string SoDienThoai { get; set; }
+
+        [Required(ErrorMessage = "Tên công ty là bắt buộc.")]
+        [Display(Name = "Company Name")]
+        public string TenCongTy { get; set; }
+
+        [Required(ErrorMessage = "Mã số thuế là bắt buộc.")]
+        [Display(Name = "Tax Code")]
+        public string MaSoThue { get; set; }
+
+        [Required(ErrorMessage = "Phần mềm là bắt buộc.")]
+        [Display(Name = "Software")]
+        public string PhanMem { get; set; }
+
+        [Required(ErrorMessage = "Mật khẩu là bắt buộc.")]
+        [StringLength(100, ErrorMessage = "Mật khẩu phải có ít nhất {2} ký tự.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string MatKhau { get; set; }
+
+        [Required(ErrorMessage = "Xác nhận mật khẩu là bắt buộc.")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm Password")]
+        [Compare("MatKhau", ErrorMessage = "Mật khẩu và xác nhận mật khẩu không khớp.")]
+        public string XacNhanMatKhau { get; set; }
     }
 }

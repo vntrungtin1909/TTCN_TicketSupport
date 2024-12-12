@@ -1,0 +1,154 @@
+﻿@model TicketSupport.Models.tblkhachhang
+
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" href="~/Content/images/Icons/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Login_v1.css">
+
+    <style>
+        .container-login100 {
+            background: url('@Url.Content("~/Content/images/hero-bg.jpg")');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrap-login100 {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            max-width: 800px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form method="post" action="Register" style="margin-left: 50px" >
+                    @Html.AntiForgeryToken()
+
+                    <span class="login100-form-title">Register</span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="wrap-input100 validate-input" data-validate="Full name is required">
+                                <input class="input100" type="text" name="HoTenKhachHang" id="HoTenKhachHang" placeholder="Full Name">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.HoTenKhachHangError</span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Valid email is required">
+                                <input class="input100" type="email" name="Email" id="Email" placeholder="Email">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.EmailError</span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Phone number is required">
+                                <input class="input100" type="text" name="SoDienThoai" id="SoDienThoai" placeholder="Phone Number">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.SoDienThoaiError</span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Company name is required">
+                                <input class="input100" type="text" name="TenCongTy" id="TenCongTy" placeholder="Company Name">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.TenCongTyError</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="wrap-input100 validate-input" data-validate="Tax code is required">
+                                <input class="input100" type="text" name="MaSoThue" id="MaSoThue" placeholder="Tax Code">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.MaSoThueError</span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Software name is required">
+                                <input class="input100" type="text" name="PhanMem" id="PhanMem" placeholder="Software">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-desktop" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.PhanMemError</span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                <input class="input100" type="password" name="MatKhau" id="MatKhau" placeholder="Password">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.MatKhauError</span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Password confirmation is required">
+                                <input class="input100" type="password" name="XacNhanMatKhau" id="XacNhanMatKhau" placeholder="Confirm Password">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.XacNhanMatKhauError</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/Vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Content/Vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/Vendor/select2/select2.min.js"></script>
+    <script src="~/Content/Vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        });
+    </script>
+</body>
+</html>

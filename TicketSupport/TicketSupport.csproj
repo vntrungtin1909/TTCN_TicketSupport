@@ -259,6 +259,7 @@
     <Compile Include="ViewModels\CaptchaRespone.cs" />
     <Compile Include="ViewModels\ChangePassVM.cs" />
     <Compile Include="ViewModels\Login.cs" />
+    <Compile Include="ViewModels\Register.cs" />
     <Compile Include="ViewModels\UserRegisterVM.cs" />
     <Compile Include="ViewModels\VerifyEmailVM.cs" />
   </ItemGroup>
@@ -281,8 +282,45 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\Images\Icons\favicon.ico" />
-    <Content Include="Content\Images\img-01.png" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\arrow-end.png" />
+    <Content Include="Content\images\arrow-middle.png" />
+    <Content Include="Content\images\arrow-start.png" />
+    <Content Include="Content\images\c-1.png" />
+    <Content Include="Content\images\c-2.png" />
+    <Content Include="Content\images\c-3.png" />
+    <Content Include="Content\images\d-1.png" />
+    <Content Include="Content\images\d-2.png" />
+    <Content Include="Content\images\d-3.png" />
+    <Content Include="Content\images\d-4.png" />
+    <Content Include="Content\images\d-5.png" />
+    <Content Include="Content\images\envelope-white.png" />
+    <Content Include="Content\images\fb.png" />
+    <Content Include="Content\images\hero-bg.jpg" />
+    <Content Include="Content\images\Icons\favicon.ico" />
+    <Content Include="Content\images\img-01.png" />
+    <Content Include="Content\images\insta.png" />
+    <Content Include="Content\images\linkedin.png" />
+    <Content Include="Content\images\location-white.png" />
+    <Content Include="Content\images\location.png" />
+    <Content Include="Content\images\map-img.png" />
+    <Content Include="Content\images\menu.png" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\prev.png" />
+    <Content Include="Content\images\quote.png" />
+    <Content Include="Content\images\search-icon.png" />
+    <Content Include="Content\images\target-bg.jpg" />
+    <Content Include="Content\images\telephone-white.png" />
+    <Content Include="Content\images\twitter.png" />
+    <Content Include="Content\images\user.png" />
+    <Content Include="Content\images\w-1.png" />
+    <Content Include="Content\images\w-2.png" />
+    <Content Include="Content\images\w-3.png" />
+    <Content Include="Content\images\w-4.png" />
+    <Content Include="Content\images\who-img.jpg" />
+    <Content Include="Content\images\youtube.png" />
     <Content Include="Content\Login_v1.css" />
     <Content Include="Content\util.css" />
     <Content Include="Content\Vendor\animate\animate.css" />
@@ -563,6 +601,8 @@
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\css\style.css.map" />
+    <Content Include="Content\css\style.scss" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
@@ -574,6 +614,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\bootstrap.js" />
+    <Content Include="Scripts\js\jquery-3.4.1.min.js" />
     <Content Include="Scripts\Login_v1.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
@@ -613,6 +655,10 @@
     <Content Include="Views\UserLogin\_DangNhap.cshtml" />
     <Content Include="Views\UserLogin\_DangKi.cshtml" />
     <Content Include="Views\UserLogin\Index.cshtml" />
+    <Content Include="Views\Home\Do.cshtml" />
+    <Content Include="Views\Home\Portfolio.cshtml" />
+    <Content Include="Views\UserLogin\ForgotPassword.cshtml" />
+    <Content Include="Views\UserLogin\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

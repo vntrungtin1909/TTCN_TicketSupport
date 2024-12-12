@@ -1,19 +1,50 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+<!-- contact section -->
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<section class="contact_section layout_padding" style="background-color: white;">
+    <div class="container">
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+        <div class="heading_container">
+            <h2>
+                Request A Call Back
+            </h2>
+        </div>
+        <div class="">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-9 mx-auto">
+                        <div class="contact-form">
+                            <form action="">
+                                <div>
+                                    <input type="text" placeholder="Full Name ">
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="Phone Number">
+                                </div>
+                                <div>
+                                    <input type="email" placeholder="Email Address">
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="Message" class="input_message">
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn_on-hover">
+                                        Send
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="map_img-box">
+            <img src="~/Content/images/map-img.png" alt="">
+        </div>
+    </div>
+</section>
+
+
+<!-- end contact section -->
