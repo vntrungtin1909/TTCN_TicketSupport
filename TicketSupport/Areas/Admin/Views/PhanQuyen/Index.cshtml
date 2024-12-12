@@ -95,11 +95,36 @@
                                         }
                                     </td>
                                     <td>
-                                        @foreach (var quyen in item.tblquyens)
+                                        @{
+                                            string flag = null;
+                                            bool isFirst = true;
+                                        }
+                                        @{
+                                            var danhSachQuyen = item.tblquyens.ToList();
+                                        }
+
+                                        @for (int i = 0; i < danhSachQuyen.Count; i++)
                                         {
-                                            <span>@quyen.ten_quyen</span><br />
+                                            var quyen = danhSachQuyen[i];
+                                            var quyenTiepTheo = i + 1 < danhSachQuyen.Count ? danhSachQuyen[i + 1] : null;
+                                            if (quyenTiepTheo != null  && quyen.ma_chuc_nang != quyenTiepTheo.ma_chuc_nang)
+                                            {
+                                                <span>@quyen.ten_quyen @quyen.tblchucnang.ten_chuc_nang; </span><br>
+                                            }
+
+                                            else if (quyenTiepTheo == null)
+                                            {
+                                                <span>@quyen.ten_quyen @quyen.tblchucnang.ten_chuc_nang; </span><br>
+                                            }
+
+                                            else
+                                            {
+                                                <span>@quyen.ten_quyen, </span>
+                                            }
+                                            flag = quyen.tblchucnang.ma_chuc_nang;
                                         }
                                     </td>
+
                                     <td>
                                         @if (userRoles != null && (userRoles.Contains("PB-C") || userRoles.Contains("PB-E") || userRoles.Contains("PB-D")))
                                         {

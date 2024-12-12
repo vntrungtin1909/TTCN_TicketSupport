@@ -29,7 +29,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
-            var tblphongban = db.tblphongbans.Include("tblquyens").FirstOrDefault(pb => pb.ma_phong_ban == id);
+            var tblphongban = db.tblphongbans.Include("tblquyens").Include("tblchucnang").FirstOrDefault(pb => pb.ma_phong_ban == id);
             if (tblphongban == null)
             {
                 return HttpNotFound();
@@ -61,8 +61,24 @@ namespace TicketSupport.Areas.Admin.Controllers
             return View(tblphongban);
         }
 		[AuthorizeRoles("PB-E")]
-		// GET: Edit
-		public ActionResult Edit(string id)
+        // GET: Edit
+        //public ActionResult Edit(string id)
+        //      {
+        //          if (string.IsNullOrEmpty(id))
+        //          {
+        //              return HttpNotFound();
+        //          }
+
+        //          var tblphongban = db.tblphongbans.Include("tblquyens").FirstOrDefault(pb => pb.ma_phong_ban == id);
+        //          if (tblphongban == null)
+        //          {
+        //              return HttpNotFound();
+        //          }
+        //          ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", tblphongban.tblquyens.Select(q => q.ma_quyen));
+        //          return View(tblphongban);
+        //      }
+
+        public ActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -74,10 +90,42 @@ namespace TicketSupport.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", tblphongban.tblquyens.Select(q => q.ma_quyen));
+
+            // Lấy danh sách chức năng và quyền
+            var chucnangs = db.tblchucnangs.ToList();
+            var quyens = db.tblquyens.ToList();
+
+            // Tạo danh sách chức năng và quyền theo cấu trúc
+            var chucNangQuyenList = chucnangs.Select(cn => new ChucNangQuyenViewModel
+            {
+                TenChucNang = cn.ten_chuc_nang,
+                Quyens = quyens
+                    .Where(q => q.ma_chuc_nang == cn.ma_chuc_nang)
+                    .Select(q => new QuyenViewModel { MaQuyen = q.ma_quyen, TenQuyen = q.ten_quyen })
+                    .ToList()
+            }).ToList();
+
+            ViewBag.ChucNangQuyen = chucNangQuyenList;
+            ViewBag.SelectedQuyen = tblphongban.tblquyens.Select(q => q.ma_quyen).ToList();
+
             return View(tblphongban);
         }
-		[AuthorizeRoles("PB-E")]
+
+        // ViewModel để truyền dữ liệu chính xác
+        public class ChucNangQuyenViewModel
+        {
+            public string TenChucNang { get; set; }
+            public List<QuyenViewModel> Quyens { get; set; }
+        }
+
+        public class QuyenViewModel
+        {
+            public string MaQuyen { get; set; }
+            public string TenQuyen { get; set; }
+        }
+
+
+        [AuthorizeRoles("PB-E")]
 		[HttpPost]
         public ActionResult Edit(tblphongban tblphongban, List<string> SelectedQuyen)
         {
@@ -103,6 +151,8 @@ namespace TicketSupport.Areas.Admin.Controllers
             }
 
             ViewBag.QuyenList = new MultiSelectList(db.tblquyens, "ma_quyen", "ten_quyen", SelectedQuyen);
+
+
             return View(tblphongban);
         }
 		[AuthorizeRoles("PB-D")]
