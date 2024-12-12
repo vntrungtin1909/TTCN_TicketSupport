@@ -156,7 +156,7 @@ namespace TicketSupport.Areas.Admin.Controllers
 		[AuthorizeRoles("NS-E")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(tblnguoidung tblnguoidung, List<String> chon)
+        public ActionResult Edit(tblnguoidung tblnguoidung, List<string> chon)
         {
 
             //if (string.IsNullOrEmpty(tblnguoidung.mat_khau) || tblnguoidung.mat_khau.Trim() == "")
@@ -194,34 +194,84 @@ namespace TicketSupport.Areas.Admin.Controllers
                     TempData["message"] = new XMessage("danger", "Người dùng không tồn tại");
                     return RedirectToAction("Index");
                 }
+                //tblnguoidung.mat_khau += " ";
+                //if (tblnguoidung.mat_khau.Trim() == "")
+                //{
+                //    tblnguoidung.mat_khau = user.mat_khau;
+                //}
+                //else
+                //{
+                //    tblnguoidung.mat_khau = MaHoa.HashPassword(tblnguoidung.mat_khau);
+                //}
+                //if (tblnguoidung.ten_dang_nhap == user.ten_dang_nhap)
+                //{
+                //    tblnguoidung.ten_dang_nhap = user.ten_dang_nhap;
+                //}
+                //else if (tblnguoidung.ten_dang_nhap != user.ten_dang_nhap && db.tblnguoidungs.Any(u => u.ten_dang_nhap == tblnguoidung.ten_dang_nhap))
+                //{
+                //    TempData["message"] = new XMessage("danger", "Tên đăng nhập đã tồn tại");
+                //    return View();
+                //}
+                //if (tblnguoidung.email == user.email)
+                //{
+                //    tblnguoidung.email = user.email;
+                //}
+                //else if (tblnguoidung.email != user.email && db.tblnguoidungs.Any(u => u.email == tblnguoidung.email))
+                //{
+                //    TempData["message"] = new XMessage("danger", "Email đã tồn tại");
+                //    return View();
+                //}
+
+
+                //user.tblphongbans.Clear();
+                //if (chon != null)
+                //{
+                //    foreach (var id in chon)
+                //    {
+                //        var phongBan = db.tblphongbans.Find(id);
+                //        if (phongBan != null)
+                //        {
+                //            tblnguoidung.tblphongbans.Add(phongBan);
+                //        }
+                //    }
+                //}
+                //tblnguoidung.trang_thai = Request.Form["trang_thai"] == "true" ? true : false;
+                //tblnguoidung.cap_nhat = DateTime.Now;
+
                 tblnguoidung.mat_khau += " ";
-                if (tblnguoidung.mat_khau.Trim() == "")
+                if (!(tblnguoidung.mat_khau.Trim() == ""))
                 {
-                    tblnguoidung.mat_khau = user.mat_khau;
-                }
-                else
-                {
-                    tblnguoidung.mat_khau = MaHoa.HashPassword(tblnguoidung.mat_khau);
-                }
-                if (tblnguoidung.ten_dang_nhap == user.ten_dang_nhap)
-                {
-                    tblnguoidung.ten_dang_nhap = user.ten_dang_nhap;
-                }
-                else if (tblnguoidung.ten_dang_nhap != user.ten_dang_nhap && db.tblnguoidungs.Any(u => u.ten_dang_nhap == tblnguoidung.ten_dang_nhap))
-                {
-                    TempData["message"] = new XMessage("danger", "Tên đăng nhập đã tồn tại");
-                    return View();
-                }
-                if (tblnguoidung.email == user.email)
-                {
-                    tblnguoidung.email = user.email;
-                }
-                else if (tblnguoidung.email != user.email && db.tblnguoidungs.Any(u => u.email == tblnguoidung.email))
-                {
-                    TempData["message"] = new XMessage("danger", "Email đã tồn tại");
-                    return View();
+                    user.mat_khau = MaHoa.HashPassword(tblnguoidung.mat_khau.Trim());
                 }
 
+                
+                if (tblnguoidung.ten_dang_nhap != user.ten_dang_nhap)
+                {
+                    if (db.tblnguoidungs.Any(u => u.ten_dang_nhap == tblnguoidung.ten_dang_nhap))
+                    {
+                        TempData["message"] = new XMessage("danger", "Tên đăng nhập đã tồn tại");
+                        ViewBag.PhongBans = new MultiSelectList(db.tblphongbans, "ma_phong_ban", "ten_phong_ban", chon);
+                        return View(tblnguoidung);
+                    }
+                    else
+                    {
+                        user.ten_dang_nhap = tblnguoidung.ten_dang_nhap;
+                    }
+                }
+               
+                if (tblnguoidung.email != user.email)
+                {
+                    if (db.tblnguoidungs.Any(u => u.email == tblnguoidung.email))
+                    {
+                        TempData["message"] = new XMessage("danger", "Email đã tồn tại");
+                        ViewBag.PhongBans = new MultiSelectList(db.tblphongbans, "ma_phong_ban", "ten_phong_ban", chon);
+                        return View(tblnguoidung);
+                    }
+                    else
+                    {
+                        user.email = tblnguoidung.email;
+                    }
+                }
 
                 user.tblphongbans.Clear();
                 if (chon != null)
@@ -235,10 +285,10 @@ namespace TicketSupport.Areas.Admin.Controllers
                         }
                     }
                 }
-                tblnguoidung.trang_thai = Request.Form["trang_thai"] == "true" ? true : false;
-                tblnguoidung.cap_nhat = DateTime.Now;
-
-
+                user.trang_thai = Request.Form["trang_thai"] == "true" ? true : false;
+                user.cap_nhat = DateTime.Now;
+                user.ho_ten_nguoi_dung = tblnguoidung.ho_ten_nguoi_dung;
+                user.so_dien_thoai = tblnguoidung.so_dien_thoai;
 
                 //db.Entry(tblnguoidung).State = EntityState.Modified;
                 db.Entry(user).State = EntityState.Modified;
@@ -248,7 +298,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             //ViewBag.PhongBans = new MultiSelectList(db.tblphongbans, "ma_phong_ban", "ten_phong_ban");
-            ViewBag.PhongBans = new MultiSelectList(db.tblphongbans, "ma_phong_ban", "ten_phong_ban", tblnguoidung.tblphongbans.Select(q => q.ma_phong_ban));
+            ViewBag.PhongBans = new MultiSelectList(db.tblphongbans, "ma_phong_ban", "ten_phong_ban", chon);
             return View(tblnguoidung);
         }
         [AuthorizeRoles("NS-D")]

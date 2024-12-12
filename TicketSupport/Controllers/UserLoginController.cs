@@ -123,60 +123,60 @@ namespace TicketSupport.Controllers
             Console.WriteLine($"Sending email to {toEmail} with subject {subject}");
         }
 
-        public ActionResult Register()
-        {
-            return View();
-        }
+        //public ActionResult Register()
+        //{
+        //    return View();
+        //}
 
-        // POST: Register
-        [HttpPost]
-        public ActionResult Register(tblkhachhang models)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Error = "Thông tin không hợp lệ. Vui lòng kiểm tra lại.";
-                return View("Register", models);
-            }
+        //// POST: Register
+        //[HttpPost]
+        //public ActionResult Register(tblkhachhang models)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        ViewBag.Error = "Thông tin không hợp lệ. Vui lòng kiểm tra lại.";
+        //        return View("Register", models);
+        //    }
 
-            // Kiểm tra mật khẩu và xác nhận mật khẩu có trùng khớp không
-            if (models.mat_khau != models.XacNhanMatKhau)
-            {
-                ViewBag.PasswordMismatch = "Mật khẩu và xác nhận mật khẩu không khớp.";
-                return View("Register", models);
-            }
+        //    // Kiểm tra mật khẩu và xác nhận mật khẩu có trùng khớp không
+        //    if (models.mat_khau != models.)
+        //    {
+        //        ViewBag.PasswordMismatch = "Mật khẩu và xác nhận mật khẩu không khớp.";
+        //        return View("Register", models);
+        //    }
 
-            // Kiểm tra nếu email đã tồn tại trong hệ thống
-            if (db.tblkhachhangs.Any(u => u.email == models.email))
-            {
-                ViewBag.Error = "Email đã tồn tại trong hệ thống.";
-                return View("Register", models);
-            }
+        //    // Kiểm tra nếu email đã tồn tại trong hệ thống
+        //    if (db.tblkhachhangs.Any(u => u.email == models.email))
+        //    {
+        //        ViewBag.Error = "Email đã tồn tại trong hệ thống.";
+        //        return View("Register", models);
+        //    }
 
-            // Mã hóa mật khẩu
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(models.mat_khau);
+        //    // Mã hóa mật khẩu
+        //    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(models.mat_khau);
 
-            // Tạo người dùng mới
-            var newUser = new tblkhachhang
-            {
-                ma_khach_hang = Guid.NewGuid().ToString(),
-                ho_ten_khach_hang = models.ho_ten_khach_hang,
-                email = models.email,
-                so_dien_thoai = models.so_dien_thoai,
-                ten_cong_ty = models.ten_cong_ty,
-                ma_so_thue = models.ma_so_thue,
-                phan_mem = models.phan_mem,
-                mat_khau = hashedPassword,
-                ngay_kich_hoat = DateTime.Now,
-                token = null,
-                token_expire = null
-            };
+        //    // Tạo người dùng mới
+        //    var newUser = new tblkhachhang
+        //    {
+        //        ma_khach_hang = Guid.NewGuid().ToString(),
+        //        ho_ten_khach_hang = models.ho_ten_khach_hang,
+        //        email = models.email,
+        //        so_dien_thoai = models.so_dien_thoai,
+        //        ten_cong_ty = models.ten_cong_ty,
+        //        ma_so_thue = models.ma_so_thue,
+        //        phan_mem = models.phan_mem,
+        //        mat_khau = hashedPassword,
+        //        ngay_kich_hoat = DateTime.Now,
+        //        token = null,
+        //        token_expire = null
+        //    };
 
-            db.tblkhachhangs.Add(newUser);
-            db.SaveChanges();
+        //    db.tblkhachhangs.Add(newUser);
+        //    db.SaveChanges();
 
-            ViewBag.Success = "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.";
-            return RedirectToAction("Login");
-        }
+        //    ViewBag.Success = "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.";
+        //    return RedirectToAction("Login");
+        //}
 
     }
 }

@@ -172,7 +172,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 }
                 else
                 {
-                    tblkhachhang.mat_khau = MaHoa.HashPassword(tblkhachhang.mat_khau);
+                    tblkhachhang.mat_khau = MaHoa.HashPassword(tblkhachhang.mat_khau.Trim());
                 }
 
                 if (tblkhachhang.email == cus.email)
@@ -182,7 +182,7 @@ namespace TicketSupport.Areas.Admin.Controllers
                 else if (tblkhachhang.email != cus.email &&  db.tblkhachhangs.Any(u => u.email == tblkhachhang.email))
                 {
                     TempData["message"] = new XMessage("danger", "Email đã tồn tại");
-                    return View();
+                    return View(tblkhachhang);
                 }
                 tblkhachhang.trang_thai = Request.Form["trang_thai"] == "true" ? true : false;
                 tblkhachhang.cap_nhat = DateTime.Now;
