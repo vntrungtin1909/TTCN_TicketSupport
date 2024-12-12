@@ -24,6 +24,7 @@ namespace TicketSupport.Areas.Admin.Views
 			ViewBag.phongBan = db.tblphongbans.Count().ToString();
 			ViewBag.quyen = db.tblquyens.Count().ToString();
 			ViewBag.khachHang = db.tblkhachhangs.Count().ToString();
+			ViewBag.yeucau = db.tblyeucauhotrokythuats.Count().ToString();
 			return View();
         }
 		public ActionResult Unauthorized()

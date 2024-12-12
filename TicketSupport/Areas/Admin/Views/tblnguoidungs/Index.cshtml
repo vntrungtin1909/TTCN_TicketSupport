@@ -29,6 +29,24 @@
                 }
             }
         });
+        //$('#myTable_filter input').on('keyup', function () {
+        //    //let input = this.value; 
+        //    //let regexPattern = input.split('|').map(term => term.trim()).join('|');
+        //    //table.search(regexPattern, true, false).draw();
+
+        //    let input = this.value; // Giá trị trong ô tìm kiếm
+        //    let terms = input.split('|').map(term => term.trim());
+        //    if (terms.length > 0) {
+        //        let rows = table.rows().data(); 
+        //        let filteredRows = rows.filter(row => {
+        //            return terms.every(term => JSON.stringify(row).toLowerCase().includes(term.toLowerCase()));
+        //        });
+        //        table.clear().rows.add(filteredRows).draw();
+        //    } else {
+        //        table.search('').draw();
+        //    }
+
+        //});
         setTimeout(function () {
             let messageElement = document.getElementById('message-container');
             if (messageElement) {

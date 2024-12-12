@@ -193,6 +193,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PhanQuyenController.cs" />
     <Compile Include="Areas\Admin\Controllers\tblnguoidungsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\YeuCauKTsController.cs" />
     <Compile Include="Areas\Admin\MaHoa.cs" />
     <Compile Include="Areas\Admin\SendMail.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
@@ -603,6 +604,11 @@
     <Content Include="Content\Vendor\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Content\css\style.css.map" />
     <Content Include="Content\css\style.scss" />
+    <Content Include="Areas\Admin\Views\YeuCauKTs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\YeuCauKTs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\YeuCauKTs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\YeuCauKTs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\YeuCauKTs\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
@@ -659,6 +665,7 @@
     <Content Include="Views\Home\Portfolio.cshtml" />
     <Content Include="Views\UserLogin\ForgotPassword.cshtml" />
     <Content Include="Views\UserLogin\Register.cshtml" />
+    <Content Include="Views\UserLogin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
