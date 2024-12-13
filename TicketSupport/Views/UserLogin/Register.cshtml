@@ -1,4 +1,4 @@
-﻿@model TicketSupport.Models.tblkhachhang
+﻿@model TicketSupport.ViewModels.Register
 
 @{
     ViewBag.Title = "Register";
@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="~/Content/images/Icons/favicon.ico" />
-
     <link rel="stylesheet" type="text/css" href="~/Content/Vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="~/Fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="~/Content/Vendor/animate/animate.css">
@@ -41,8 +40,9 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
             max-width: 800px;
             width: 100%;
+            position: relative;
         }
-        /* Định dạng nút đóng */
+
         .close-button {
             position: absolute;
             top: 10px;
@@ -62,22 +62,16 @@
             z-index: 10;
         }
 
-            .close-button a {
-                text-decoration: none;
-                color: #333;
-            }
-
-            .close-button:hover {
-                background: #f8d7da;
-                color: #721c24;
-                cursor: pointer;
-            }
-
-        /* Đảm bảo phần form có relative để nút được định vị chính xác */
-        .wrap-login100 {
-            position: relative;
+        .close-button a {
+            text-decoration: none;
+            color: #333;
         }
 
+        .close-button:hover {
+            background: #f8d7da;
+            color: #721c24;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +81,10 @@
                 <div class="close-button">
                     <a href="@Url.Action("Index", "Home")">&times;</a>
                 </div>
-                <form method="post" action="Register" style="margin-left: 50px">
+
+                @using (Html.BeginForm("Register", "UserLogin", FormMethod.Post, new { @style = "margin-left: 50px" }))
+
+                {
                     @Html.AntiForgeryToken()
 
                     <span class="login100-form-title">Register</span>
@@ -95,89 +92,90 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="wrap-input100 validate-input" data-validate="Full name is required">
-                                <input class="input100" type="text" name="HoTenKhachHang" id="HoTenKhachHang" placeholder="Full Name">
+                                @Html.TextBoxFor(model => model.HoTenKhachHang, new { @class = "input100", placeholder = "Full Name" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.HoTenKhachHangError</span>
+                                @Html.ValidationMessageFor(model => model.HoTenKhachHang, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="wrap-input100 validate-input" data-validate="Valid email is required">
-                                <input class="input100" type="email" name="Email" id="Email" placeholder="Email">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "input100", placeholder = "Email" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.EmailError</span>
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="wrap-input100 validate-input" data-validate="Phone number is required">
-                                <input class="input100" type="text" name="SoDienThoai" id="SoDienThoai" placeholder="Phone Number">
+                                @Html.TextBoxFor(model => model.SoDienThoai, new { @class = "input100", placeholder = "Phone Number" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-phone" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.SoDienThoaiError</span>
+                                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="wrap-input100 validate-input" data-validate="Company name is required">
-                                <input class="input100" type="text" name="TenCongTy" id="TenCongTy" placeholder="Company Name">
+                                @Html.TextBoxFor(model => model.TenCongTy, new { @class = "input100", placeholder = "Company Name" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-building" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.TenCongTyError</span>
+                                @Html.ValidationMessageFor(model => model.TenCongTy, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="wrap-input100 validate-input" data-validate="Tax code is required">
-                                <input class="input100" type="text" name="MaSoThue" id="MaSoThue" placeholder="Tax Code">
+                                @Html.TextBoxFor(model => model.MaSoThue, new { @class = "input100", placeholder = "Tax Code" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-id-card" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.MaSoThueError</span>
+                                @Html.ValidationMessageFor(model => model.MaSoThue, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="wrap-input100 validate-input" data-validate="Software name is required">
-                                <input class="input100" type="text" name="PhanMem" id="PhanMem" placeholder="Software">
+                                @Html.TextBoxFor(model => model.PhanMem, new { @class = "input100", placeholder = "Software" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-desktop" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.PhanMemError</span>
+                                @Html.ValidationMessageFor(model => model.PhanMem, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="wrap-input100 validate-input" data-validate="Password is required">
-                                <input class="input100" type="password" name="MatKhau" id="MatKhau" placeholder="Password">
+                                @Html.PasswordFor(model => model.MatKhau, new { @class = "input100", placeholder = "Password" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.MatKhauError</span>
+                                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="wrap-input100 validate-input" data-validate="Password confirmation is required">
-                                <input class="input100" type="password" name="XacNhanMatKhau" id="XacNhanMatKhau" placeholder="Confirm Password">
+                                @Html.PasswordFor(model => model.XacNhanMatKhau, new { @class = "input100", placeholder = "Confirm Password" })
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
                                 </span>
-                                <span class="text-danger">@ViewBag.XacNhanMatKhauError</span>
+                                @Html.ValidationMessageFor(model => model.XacNhanMatKhau, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
+
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">Register</button>
+                        <button type="submit" class="login100-form-btn">Register</button>
                     </div>
                     <div class="text-center p-t-12" style="margin-left:15px">
                         <a class="txt2" href="@Url.Action("Index", "UserLogin")">
                             Back to Login
                         </a>
                     </div>
-                </form>
+                }
             </div>
         </div>
     </div>

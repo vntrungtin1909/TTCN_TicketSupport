@@ -200,6 +200,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SendSupportTicketController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />
     <Compile Include="Filters\MyAuthenFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -666,6 +667,7 @@
     <Content Include="Views\UserLogin\ForgotPassword.cshtml" />
     <Content Include="Views\UserLogin\Register.cshtml" />
     <Content Include="Views\UserLogin\Login.cshtml" />
+    <Content Include="Views\SendSupportTicket\SendSupportTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TicketSupport.Areas.Admin;
 using TicketSupport.Models;
 using TicketSupport.ViewModels;
 
@@ -41,11 +42,11 @@ namespace TicketSupport.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Login model, string captcha)
+        public ActionResult Login(Login model)
         {
             if (ModelState.IsValid)
             {
-                tblnguoidung user = db.tblnguoidungs.FirstOrDefault(u => u.email == model.Email || u.ten_dang_nhap == model.Email || u.mat_khau == model.Password);
+                tblkhachhang user = db.tblkhachhangs.FirstOrDefault(u => u.email == model.Email || u.mat_khau == model.Password);
 
                 if (user == null)
                 {
@@ -58,21 +59,20 @@ namespace TicketSupport.Controllers
                     return View("Index");
                 }
 
-                if (user.ngay_kich_hoat == null)
-                {
-                    user.token = Guid.NewGuid().ToString();
-                    user.token_expire = DateTime.Now.AddHours(1);
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["first"] = "Đổi mật khẩu cho lần đầu đăng nhập";
-                    string resetLink = Url.Action("ResetPassword", "Login", new { token = user.token }, Request.Url.Scheme);
-                    return Redirect(resetLink);
-                }
+                //if (user.ngay_kich_hoat == null)
+                //{
+                //    user.token = Guid.NewGuid().ToString();
+                //    db.Entry(user).State = EntityState.Modified;
+                //    db.SaveChanges();
+                //    TempData["first"] = "Đổi mật khẩu cho lần đầu đăng nhập";
+                //    string resetLink = Url.Action("ResetPassword", "Login", new { token = user.token }, Request.Url.Scheme);
+                //    return Redirect(resetLink);
+                //}
 
-                var userRoles = GetUserRoles(user.ma_nguoi_dung);
+                var userRoles = GetUserRoles(user.ma_khach_hang);
 
-                Session["UserId"] = user.ma_nguoi_dung;
-                Session["Username"] = user.ho_ten_nguoi_dung;
+                Session["UserId"] = user.ma_khach_hang;
+                Session["Username"] = user.ho_ten_khach_hang;
                 Session["UserRoles"] = userRoles; // Lưu danh sách quyền vào Session
                                                   //return RedirectToAction("Index", "Home");
                 return RedirectToAction("Index", "Home");
@@ -88,101 +88,120 @@ namespace TicketSupport.Controllers
         }
 
         // POST: ForgotPassword
-        [HttpPost]
-        public ActionResult ForgotPassword(string email)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                ViewBag.Error = "Vui lòng nhập email.";
-                return View();
-            }
-
-            var user = db.tblnguoidungs.FirstOrDefault(u => u.email == email);
-            if (user == null)
-            {
-                ViewBag.Error = "Email không tồn tại trong hệ thống.";
-                return View();
-            }
-
-            // Tạo token đặt lại mật khẩu
-            user.token = Guid.NewGuid().ToString();
-            user.token_expire = DateTime.Now.AddHours(1);
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-
-            // Gửi email chứa liên kết đặt lại mật khẩu
-            string resetLink = Url.Action("ResetPassword", "UserLogin", new { token = user.token }, Request.Url.Scheme);
-            string subject = "Yêu cầu đặt lại mật khẩu";
-            string body = $"Chào {user.ho_ten_nguoi_dung},<br />Vui lòng nhấn vào liên kết dưới đây để đặt lại mật khẩu của bạn:<br /><a href='{resetLink}'>Đặt lại mật khẩu</a><br />Liên kết sẽ hết hạn sau 1 giờ.";
-
-            // Giả sử có hàm gửi email (SendEmail)
-            SendEmail(user.email, subject, body);
-
-            ViewBag.Success = "Email khôi phục mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư.";
-            return View();
-        }
-
-        // Hàm giả định để gửi email
-        private void SendEmail(string toEmail, string subject, string body)
-        {
-            // Thêm logic gửi email tại đây (SMTP, SendGrid, v.v.)
-            Console.WriteLine($"Sending email to {toEmail} with subject {subject}");
-        }
+        
 
         public ActionResult Register()
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult Register(ViewModels.Register register)
+        {
+            if (string.IsNullOrEmpty(register.MatKhau))
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu không được để trống");
+            }
+            if (string.IsNullOrEmpty(register.Email))
+            {
+                ModelState.AddModelError("Email", "Email không được để trống");
+            }
+            if (string.IsNullOrEmpty(register.HoTenKhachHang))
+            {
+                ModelState.AddModelError("HoTenKhachHang", "Họ tên khách hàng không được để trống");
+            }
+            if (string.IsNullOrEmpty(register.SoDienThoai))
+            {
+                ModelState.AddModelError("SoDienThoai", "Số điện thoại không được để trống");
+            }
+            if (string.IsNullOrEmpty(register.TenCongTy))
+            {
+                ModelState.AddModelError("TenCongTy", "Tên công ty không được để trống");
+            }
+            if (string.IsNullOrEmpty(register.MaSoThue))
+            {
+                ModelState.AddModelError("MaSoThue", "Mã số thuế không được để trống");
+            }
 
-        //// POST: Register
-        //[HttpPost]
-        //public ActionResult Register(tblkhachhang models)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ViewBag.Error = "Thông tin không hợp lệ. Vui lòng kiểm tra lại.";
-        //        return View("Register", models);
-        //    }
+            // Kiểm tra email đã tồn tại
+            bool emailExists = db.tblkhachhangs.Any(kh => kh.email == register.Email);
+            if (emailExists)
+            {
+                ModelState.AddModelError("Email", "Email đã tồn tại trong hệ thống");
+            }
 
-        //    // Kiểm tra mật khẩu và xác nhận mật khẩu có trùng khớp không
-        //    if (models.mat_khau != models.)
-        //    {
-        //        ViewBag.PasswordMismatch = "Mật khẩu và xác nhận mật khẩu không khớp.";
-        //        return View("Register", models);
-        //    }
+            // Kiểm tra mật khẩu và xác nhận mật khẩu
+            if (register.MatKhau != register.XacNhanMatKhau)
+            {
+                ModelState.AddModelError("XacNhanMatKhau", "Mật khẩu không khớp");
+            }
 
-        //    // Kiểm tra nếu email đã tồn tại trong hệ thống
-        //    if (db.tblkhachhangs.Any(u => u.email == models.email))
-        //    {
-        //        ViewBag.Error = "Email đã tồn tại trong hệ thống.";
-        //        return View("Register", models);
-        //    }
+            if (ModelState.IsValid)
+            {
+                tblkhachhang newCustomer = new tblkhachhang
+                {
+                    ho_ten_khach_hang = register.HoTenKhachHang,
+                    email = register.Email,
+                    so_dien_thoai = register.SoDienThoai,
+                    ten_cong_ty = register.TenCongTy,
+                    ma_so_thue = register.MaSoThue,
+                    phan_mem = register.PhanMem,
+                    trang_thai = true,
+                    ngay_tao = DateTime.Now
+                };
 
-        //    // Mã hóa mật khẩu
-        //    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(models.mat_khau);
+                // Tạo mã khách hàng tự động
+                tblkhachhang lastCus = db.tblkhachhangs.OrderByDescending(kh => kh.ma_khach_hang).FirstOrDefault();
+                if (lastCus == null)
+                {
+                    newCustomer.ma_khach_hang = "KH00001";
+                }
+                else
+                {
+                    int num = int.Parse(lastCus.ma_khach_hang.Substring(2));
+                    newCustomer.ma_khach_hang = "KH" + (num + 1).ToString("D5");
+                }
 
-        //    // Tạo người dùng mới
-        //    var newUser = new tblkhachhang
-        //    {
-        //        ma_khach_hang = Guid.NewGuid().ToString(),
-        //        ho_ten_khach_hang = models.ho_ten_khach_hang,
-        //        email = models.email,
-        //        so_dien_thoai = models.so_dien_thoai,
-        //        ten_cong_ty = models.ten_cong_ty,
-        //        ma_so_thue = models.ma_so_thue,
-        //        phan_mem = models.phan_mem,
-        //        mat_khau = hashedPassword,
-        //        ngay_kich_hoat = DateTime.Now,
-        //        token = null,
-        //        token_expire = null
-        //    };
+                // Hash mật khẩu
+                string plainPass = register.MatKhau;
+                newCustomer.mat_khau = MaHoa.HashPassword(plainPass);
 
-        //    db.tblkhachhangs.Add(newUser);
-        //    db.SaveChanges();
+                // Thêm vào cơ sở dữ liệu
+                db.tblkhachhangs.Add(newCustomer);
+                db.SaveChanges();
 
-        //    ViewBag.Success = "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.";
-        //    return RedirectToAction("Login");
-        //}
+                // Gửi email xác nhận
+                string subject = "Thông báo tạo tài khoản thành công";
+                string body = $"<p>Chào {newCustomer.ho_ten_khach_hang}</p>" +
+                              $"<p>Email đăng nhập: <b>{newCustomer.email}</b></p>" +
+                              $"<p>Mật khẩu đăng nhập: <b>{plainPass}</b></p>" +
+                              $"<p>Xin cảm ơn</p>";
 
+                EmailHelper.SendEmail(newCustomer.email, subject, body);
+
+                return RedirectToAction("Login");
+            }
+
+            return View(register);
+        }
+        public ActionResult CustomerInfo()
+        {
+            // Logic để lấy thông tin khách hàng từ session hoặc cơ sở dữ liệu
+            string userId = Session["UserId"].ToString();
+            var customer = db.tblkhachhangs.FirstOrDefault(c => c.ma_khach_hang == userId);
+            return View(customer);  // Trả về view với thông tin khách hàng
+        }
+
+        // Action hiển thị danh sách yêu cầu của khách hàng
+        public ActionResult RequestList()
+        {
+            string userId = Session["UserId"].ToString();
+            var requests = db.tblyeucauhotrokythuats.Where(r => r.ma_khach_hang == userId).ToList();
+            return View(requests);  // Trả về view với danh sách yêu cầu
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear(); // Xóa session
+            return RedirectToAction("Index", "Home"); // Điều hướng đến trang chủ hoặc trang đăng nhập
+        }
     }
 }

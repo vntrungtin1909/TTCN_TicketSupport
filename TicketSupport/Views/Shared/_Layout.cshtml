@@ -27,6 +27,49 @@
     <link href="~/Content/css/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="~/Content/css/responsive.css" rel="stylesheet" />
+    <style>
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 0; /* Ban đầu ẩn bằng cách đặt width = 0 */
+            opacity: 0; /* Ẩn hoàn toàn */
+            margin-left: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: all 0.3s ease; /* Hiệu ứng mượt */
+            overflow: hidden; /* Ẩn nội dung nếu vượt quá khung */
+        }
+
+            .search-input.active {
+                width: 200px; /* Độ rộng khi hiện ra */
+                opacity: 1; /* Hiển thị */
+            }
+
+        .nav_search-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+            .nav_search-btn i {
+                font-size: 20px;
+                color: #333;
+            }
+        .dropdown-menu {
+            background-color: rgba(255, 255, 255, 0.6) !important;
+            border: none; /* Xóa border nếu muốn */
+            list-style: none !important;
+        }
+
+            /* Thay đổi màu nền khi hover (nếu cần) */
+            .dropdown-menu > li > a:hover {
+                background-color: rgba(1, 0, 0, 0.4); /* Màu nền nhẹ khi hover */
+            }
+    </style>
 </head>
 
 <body>
@@ -62,16 +105,36 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact us</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Login", "UserLogin")">Login</a>
-                                </li>
+                                @if (Session["Username"] != null)
+                                {
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                            Hi, @Session["Username"] <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="@Url.Action("CustomerInfo", "User")" class="nav-link">Thông tin khách hàng</a></li>
+                                            <li><a href="@Url.Action("RequestList", "User")" class="nav-link">Danh sách yêu cầu</a></li>
+                                            <li><a href="@Url.Action("Logout", "UserLogin")" class="nav-link">Logout</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("Login", "UserLogin")" class="nav-link">Login</a></li>
+                                }
                             </ul>
                             <div class="user_option">
                                 <a href="">
                                     <img src="~/Content/images/user.png" alt="">
                                 </a>
-                                <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
+                                @*<form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
                                     <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                                </form>*@
+                                <form class="search-container" >
+                                    <button type="button" class="nav_search-btn my-2 my-sm-0" onclick="toggleSearchInput()" style="margin-left: 15px">
+                                        <i class="fas fa-search"></i> <!-- Biểu tượng Font Awesome -->
+                                    </button>
+                                    <input type="text" class="search-input" placeholder="Nhập nội dung tìm kiếm">
                                 </form>
                             </div>
                         </div>
@@ -81,165 +144,177 @@
         </header>
         <!-- end header section -->
         @RenderBody()
-    <!-- info section -->
-    <section class="info_section ">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="info_contact">
-                        <h5>
-                            About Shop
-                        </h5>
-                        <div>
-                            <div class="img-box">
-                                <img src="~/Content/images/location-white.png" width="18px" alt="">
+        <!-- info section -->
+        <section class="info_section ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="info_contact">
+                            <h5>
+                                About Shop
+                            </h5>
+                            <div>
+                                <div class="img-box">
+                                    <img src="~/Content/images/location-white.png" width="18px" alt="">
+                                </div>
+                                <p>
+                                    Address
+                                </p>
                             </div>
-                            <p>
-                                Address
-                            </p>
+                            <div>
+                                <div class="img-box">
+                                    <img src="~/Content/images/telephone-white.png" width="12px" alt="">
+                                </div>
+                                <p>
+                                    +01 1234567890
+                                </p>
+                            </div>
+                            <div>
+                                <div class="img-box">
+                                    <img src="~/Content/images/envelope-white.png" width="18px" alt="">
+                                </div>
+                                <p>
+                                    demo@gmail.com
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <div class="img-box">
-                                <img src="~/Content/images/telephone-white.png" width="12px" alt="">
-                            </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info_info">
+                            <h5>
+                                Informations
+                            </h5>
                             <p>
-                                +01 1234567890
-                            </p>
-                        </div>
-                        <div>
-                            <div class="img-box">
-                                <img src="~/Content/images/envelope-white.png" width="18px" alt="">
-                            </div>
-                            <p>
-                                demo@gmail.com
+                                ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                             </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="info_info">
-                        <h5>
-                            Informations
-                        </h5>
-                        <p>
-                            ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                        </p>
-                    </div>
-                </div>
 
-                <div class="col-md-3">
-                    <div class="info_insta">
-                        <h5>
-                            Instagram
-                        </h5>
-                        <div class="insta_container">
-                            <div>
-                                <a href="">
-                                    <div class="insta-box b-1">
-                                        <img src="~/Content/images/insta.png" alt="">
-                                    </div>
-                                </a>
-                                <a href="">
-                                    <div class="insta-box b-2">
-                                        <img src="~/Content/images/insta.png" alt="">
-                                    </div>
-                                </a>
-                            </div>
+                    <div class="col-md-3">
+                        <div class="info_insta">
+                            <h5>
+                                Instagram
+                            </h5>
+                            <div class="insta_container">
+                                <div>
+                                    <a href="">
+                                        <div class="insta-box b-1">
+                                            <img src="~/Content/images/insta.png" alt="">
+                                        </div>
+                                    </a>
+                                    <a href="">
+                                        <div class="insta-box b-2">
+                                            <img src="~/Content/images/insta.png" alt="">
+                                        </div>
+                                    </a>
+                                </div>
 
-                            <div>
-                                <a href="">
-                                    <div class="insta-box b-3">
-                                        <img src="~/Content/images/insta.png" alt="">
-                                    </div>
-                                </a>
-                                <a href="">
-                                    <div class="insta-box b-4">
-                                        <img src="~/Content/images/insta.png" alt="">
-                                    </div>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="">
-                                    <div class="insta-box b-3">
-                                        <img src="~/Content/images/insta.png" alt="">
-                                    </div>
-                                </a>
-                                <a href="">
-                                    <div class="insta-box b-4">
-                                        <img src="~/Content/images/insta.png" alt="">
-                                    </div>
-                                </a>
+                                <div>
+                                    <a href="">
+                                        <div class="insta-box b-3">
+                                            <img src="~/Content/images/insta.png" alt="">
+                                        </div>
+                                    </a>
+                                    <a href="">
+                                        <div class="insta-box b-4">
+                                            <img src="~/Content/images/insta.png" alt="">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="">
+                                        <div class="insta-box b-3">
+                                            <img src="~/Content/images/insta.png" alt="">
+                                        </div>
+                                    </a>
+                                    <a href="">
+                                        <div class="insta-box b-4">
+                                            <img src="~/Content/images/insta.png" alt="">
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="info_form ">
-                        <h5>
-                            Newsletter
-                        </h5>
-                        <form action="">
-                            <input type="email" placeholder="Enter your email">
-                            <button>
-                                Subscribe
-                            </button>
-                        </form>
-                        <div class="social_box">
-                            <a href="">
-                                <img src="~/Content/images/fb.png" alt="">
-                            </a>
-                            <a href="">
-                                <img src="~/Content/images/twitter.png" alt="">
-                            </a>
-                            <a href="">
-                                <img src="~/Content/images/linkedin.png" alt="">
-                            </a>
-                            <a href="">
-                                <img src="~/Content/images/youtube.png" alt="">
-                            </a>
+                    <div class="col-md-3">
+                        <div class="info_form ">
+                            <h5>
+                                Newsletter
+                            </h5>
+                            <form action="">
+                                <input type="email" placeholder="Enter your email">
+                                <button>
+                                    Subscribe
+                                </button>
+                            </form>
+                            <div class="social_box">
+                                <a href="">
+                                    <img src="~/Content/images/fb.png" alt="">
+                                </a>
+                                <a href="">
+                                    <img src="~/Content/images/twitter.png" alt="">
+                                </a>
+                                <a href="">
+                                    <img src="~/Content/images/linkedin.png" alt="">
+                                </a>
+                                <a href="">
+                                    <img src="~/Content/images/youtube.png" alt="">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- end info_section -->
-    <!-- footer section -->
-    <section class="container-fluid footer_section">
-        <p>
-            &copy; 2020 All Rights Reserved By
-            <a href="https://html.design/">Free Html Templates</a>
-        </p>
-    </section>
-    <!-- footer section -->
+        <!-- end info_section -->
+        <!-- footer section -->
+        <section class="container-fluid footer_section">
+            <p>
+                &copy; 2020 All Rights Reserved By
+                <a href="https://html.design/">Free Html Templates</a>
+            </p>
+        </section>
+        <!-- footer section -->
 
-    <script type="text/javascript" src="~/Scripts/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/bootstrap.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-    </script>
-    <!-- owl carousel script
-      -->
-    <script type="text/javascript">
-    $(".owl-carousel").owlCarousel({
-      loop: true,
-      margin: 0,
-      navText: [],
-      center: true,
-      autoplay: true,
-      autoplayHoverPause: true,
-      responsive: {
-        0: {
-          items: 1
-        },
-        1000: {
-          items: 3
-        }
-      }
-    });
-    </script>
-    <!-- end owl carousel script -->
-
+        <script type="text/javascript" src="~/Scripts/js/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+        </script>
+        <!-- owl carousel script
+    -->
+        <script type="text/javascript">
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 0,
+                navText: [],
+                center: true,
+                autoplay: true,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    1000: {
+                        items: 3
+                    }
+                }
+            });
+        </script>
+        <!-- end owl carousel script -->
+        <script>
+            function toggleSearchInput() {
+                // Tìm phần tử input
+                const searchInput = document.querySelector('.search-input');
+                // Thêm hoặc xóa class 'active' để hiển thị input
+                searchInput.classList.toggle('active');
+                // Đặt focus vào input nếu nó được hiển thị
+                if (searchInput.classList.contains('active')) {
+                    searchInput.focus();
+                }
+            }
+        </script>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
