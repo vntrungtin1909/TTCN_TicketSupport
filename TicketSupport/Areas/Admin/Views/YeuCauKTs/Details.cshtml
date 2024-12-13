@@ -54,23 +54,9 @@
                                 </div>
                             </div><div class="form-group">
                                 @Html.LabelFor(model => model.trang_thai_xu_ly, "Trạng thái", htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-10">
-                                    @if (Model.trang_thai_xu_ly == "0")
-                                    {
-
-                                        <div class="form-control"> Chưa xử lí</div>
-                                    }
-                                    else if (Model.trang_thai_xu_ly == "1")
-                                    {
-
-                                        <div class="form-control"> Đang xử lí</div>
-                                    }
-                                    else if (Model.trang_thai_xu_ly == "2")
-                                    {
-
-                                        <div class="form-control"> Đã hoàn thành</div>
-                                    }
-                                </div>
+                                      <div class="col-md-10">
+                                          <div class="form-control"> @Html.DisplayFor(model => model.trang_thai_xu_ly) </div>
+                                      </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.ngay_tiep_nhan, "Ngày tiếp nhận", htmlAttributes: new { @class = "control-label col-md-4" })

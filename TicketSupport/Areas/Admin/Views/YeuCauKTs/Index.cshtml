@@ -103,18 +103,27 @@
                                         @Html.DisplayFor(modelItem => item.ma_phong_ban)
                                     </td>
                                     <td class="text-center">
-                                        @if (item.trang_thai_xu_ly == "0")
-                                        {
-                                            <span class="badge badge-secondary">Chưa xử lí</span>
-                                        }
-                                        else if (item.trang_thai_xu_ly == "1")
-                                        {
-                                            <span class="badge badge-warning">Đang xử lí</span>
-                                        }
-                                        else if (item.trang_thai_xu_ly == "2")
-                                        {
-                                            <span class="badge badge-success">Đã hoàn thành</span>
-                                        }
+                                        @*@if (item.trang_thai_xu_ly == "Chưa xử lí")
+        {
+            <span class="badge badge-secondary">Chưa xử lí</span>
+        }
+        else if (item.trang_thai_xu_ly == "Đang xử lí")
+        {
+            <span class="badge badge-warning">Đang xử lí</span>
+        }
+        else if (item.trang_thai_xu_ly == "Đã hoàn thành")
+        {
+            <span class="badge badge-success">Đã hoàn thành</span>
+        }*@
+                                        @Html.DropDownListFor(
+       modelItem => item.trang_thai_xu_ly,
+       new SelectList(new[] {
+           new { Text = "Chưa xử lí", Value = "Chưa xử lí" },
+           new { Text = "Đang xử lí", Value = "Đang xử lí" },
+           new { Text = "Đã hoàn thành", Value = "Đã hoàn thành" }
+       }, "Value", "Text", item.trang_thai_xu_ly),
+       new { @class = "form-control" }
+   )
                                     </td>
                                     <td>
 
