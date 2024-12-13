@@ -40,7 +40,7 @@
           <Property Name="cap_nhat" Type="datetime" />
           <Property Name="ngay_tao" Type="datetime" />
           <Property Name="token" Type="varchar" MaxLength="200" />
-          <Property Name="token_expire" Type="varchar" MaxLength="200" />
+          <Property Name="token_expire" Type="datetime" />
         </EntityType>
         <EntityType Name="tbllichsuthaydoiyeucau">
           <Key>
@@ -51,7 +51,7 @@
           <Property Name="ma_yeu_cau" Type="varchar" MaxLength="10" />
           <Property Name="trang_thai_xu_ly" Type="varchar" MaxLength="30" />
           <Property Name="noi_dung" Type="varchar(max)" Nullable="false" />
-          <Property Name="loai_thay_doi" Type="nvarchar" MaxLength="50" />
+          <Property Name="loai_thay_doi" Type="nvarchar" MaxLength="100" />
           <Property Name="ngay_tao" Type="datetime" />
           <Property Name="ngay_cap_nhat" Type="datetime" />
         </EntityType>
@@ -116,7 +116,7 @@
           <Property Name="ngay_tiep_nhan" Type="datetime" />
           <Property Name="ngay_xu_ly" Type="datetime" />
           <Property Name="trang_thai_xu_ly" Type="nvarchar" MaxLength="30" />
-          <Property Name="ma_khach_hang" Type="varchar" MaxLength="10" />
+          <Property Name="ma_khach_hang" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ma_phong_ban" Type="varchar" MaxLength="10" />
         </EntityType>
         <Association Name="FK_TBLLICHS_REFERENCE_TBLNGUOI">
@@ -204,7 +204,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TBLYEUCA_REFERENCE_TBLKHACH">
-          <End Role="tblkhachhang" Type="Self.tblkhachhang" Multiplicity="0..1" />
+          <End Role="tblkhachhang" Type="Self.tblkhachhang" Multiplicity="1" />
           <End Role="tblyeucauhotrokythuat" Type="Self.tblyeucauhotrokythuat" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblkhachhang">
@@ -347,7 +347,7 @@
           <Property Name="cap_nhat" Type="DateTime" Precision="3" />
           <Property Name="ngay_tao" Type="DateTime" Precision="3" />
           <Property Name="token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="token_expire" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="token_expire" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblyeucauhotrokythuats" Relationship="Self.FK_TBLYEUCA_REFERENCE_TBLKHACH" FromRole="tblkhachhang" ToRole="tblyeucauhotrokythuat" />
         </EntityType>
         <EntityType Name="tbllichsuthaydoiyeucau">
@@ -359,7 +359,7 @@
           <Property Name="ma_yeu_cau" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="trang_thai_xu_ly" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="noi_dung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="loai_thay_doi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="loai_thay_doi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ngay_tao" Type="DateTime" Precision="3" />
           <Property Name="ngay_cap_nhat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblnguoidung" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLNGUOI" FromRole="tbllichsuthaydoiyeucau" ToRole="tblnguoidung" />
@@ -417,7 +417,7 @@
           <Property Name="ngay_tiep_nhan" Type="DateTime" Precision="3" />
           <Property Name="ngay_xu_ly" Type="DateTime" Precision="3" />
           <Property Name="trang_thai_xu_ly" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="ma_khach_hang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ma_khach_hang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ma_phong_ban" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblkhachhang" Relationship="Self.FK_TBLYEUCA_REFERENCE_TBLKHACH" FromRole="tblyeucauhotrokythuat" ToRole="tblkhachhang" />
           <NavigationProperty Name="tbllichsuthaydoiyeucaus" Relationship="Self.FK_TBLLICHS_REFERENCE_TBLYEUCA" FromRole="tblyeucauhotrokythuat" ToRole="tbllichsuthaydoiyeucau" />
@@ -436,7 +436,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TBLYEUCA_REFERENCE_TBLKHACH">
-          <End Role="tblkhachhang" Type="Self.tblkhachhang" Multiplicity="0..1" />
+          <End Role="tblkhachhang" Type="Self.tblkhachhang" Multiplicity="1" />
           <End Role="tblyeucauhotrokythuat" Type="Self.tblyeucauhotrokythuat" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblkhachhang">
