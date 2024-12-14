@@ -115,15 +115,26 @@
         {
             <span class="badge badge-success">Đã hoàn thành</span>
         }*@
-                                        @Html.DropDownListFor(
-       modelItem => item.trang_thai_xu_ly,
-       new SelectList(new[] {
-           new { Text = "Chưa xử lí", Value = "Chưa xử lí" },
-           new { Text = "Đang xử lí", Value = "Đang xử lí" },
-           new { Text = "Đã hoàn thành", Value = "Đã hoàn thành" }
-       }, "Value", "Text", item.trang_thai_xu_ly),
-       new { @class = "form-control" }
-   )
+                                        @*@Html.DropDownListFor(
+        modelItem => item.trang_thai_xu_ly,
+        new SelectList(new[] {
+            new { Text = "Chưa xử lí", Value = "Chưa xử lí" },
+            new { Text = "Đang xử lí", Value = "Đang xử lí" },
+            new { Text = "Đã hoàn thành", Value = "Đã hoàn thành" }
+        }, "Value", "Text", item.trang_thai_xu_ly),
+        new { @class = "form-control" })*@
+                                        <form method="post" action="@Url.Action("trangThaiIndex", "YeuCauKTs")">
+                                            <input type="hidden" name="id" value="@item.ma_yeu_cau" />
+                                            @Html.DropDownList(
+                                                "trangThaiXuLy",
+                                                new SelectList(new[] {
+                                                    new { Text = "Chưa xử lí", Value = "Chưa xử lí" },
+                                                    new { Text = "Đang xử lí", Value = "Đang xử lí" },
+                                                    new { Text = "Đã hoàn thành", Value = "Đã hoàn thành" }
+                                                }, "Value", "Text", item.trang_thai_xu_ly),
+                                                new { @class = "form-control", onchange = "this.form.submit();" }
+                                            )
+                                        </form>
                                     </td>
                                     <td>
 

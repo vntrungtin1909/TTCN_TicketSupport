@@ -313,6 +313,55 @@ namespace TicketSupport.Areas.Admin.Controllers
             TempData["message"] = new XMessage("success", "xóa mẫu tin thành  công");
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public ActionResult trangThaiIndex(string id, string trangThaiXuLy)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(trangThaiXuLy))
+            {
+                TempData["message"] = new XMessage("danger", "Dữ liệu không hợp lệ");
+                return RedirectToAction("Index");
+            }
+
+            var yeuCau = db.tblyeucauhotrokythuats.Find(id);
+            if (yeuCau == null)
+            {
+                TempData["message"] = new XMessage("danger", "Không tìm thấy yêu cầu");
+                return RedirectToAction("Index");
+            }
+            
+            if (yeuCau.trang_thai_xu_ly == null && trangThaiXuLy != "Chưa xử lí")
+            {
+                yeuCau.ngay_xu_ly = DateTime.Now;
+            }
+            tbllichsuthaydoiyeucau lastHis = db.tbllichsuthaydoiyeucaus
+                                            .OrderByDescending(kh => kh.ma_lich_su)
+                                            .FirstOrDefault();
+            tbllichsuthaydoiyeucau ls = new tbllichsuthaydoiyeucau();
+            if (lastHis == null || !lastHis.ma_lich_su.Contains(DateTime.Now.ToString("ddMMyyyy")))
+            {
+                ls.ma_lich_su = $"LS-{DateTime.Now:ddMMyyyy}-0001";
+            }
+            else
+            {
+                int num = int.Parse(lastHis.ma_lich_su.Substring(lastHis.ma_lich_su.LastIndexOf('-') + 1));
+                ls.ma_lich_su = $"LS-{DateTime.Now:ddMMyyyy}-{(num + 1):D4}";
+            }
+
+            ls.ma_yeu_cau = yeuCau.ma_yeu_cau;
+            ls.ngay_tao = DateTime.Now;
+            ls.ma_nhan_vien = Session["UserId"].ToString();
+            ls.trang_thai_xu_ly = trangThaiXuLy;
+            ls.loai_thay_doi = "Thay đổi trạng thái xử lí";
+            ls.noi_dung = "Trạng thái xử lí: " + yeuCau.trang_thai_xu_ly + " => " + trangThaiXuLy;
+            yeuCau.trang_thai_xu_ly = trangThaiXuLy;
+            db.tbllichsuthaydoiyeucaus.Add(ls);
+            db.SaveChanges();
+            db.Entry(yeuCau).State = EntityState.Modified;
+            db.SaveChanges();
+
+            TempData["message"] = new XMessage("success", "Cập nhật trạng thái thành công");
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {
